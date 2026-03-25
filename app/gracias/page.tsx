@@ -49,7 +49,7 @@ function GraciasContent() {
     }
   }, [searchParams])
 
-  const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573001234567"
+  const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "573216549342"
   const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(
     "Hola, acabo de registrar mi interés en PUNTAMAREA y quiero agendar una asesoría privada."
   )}`

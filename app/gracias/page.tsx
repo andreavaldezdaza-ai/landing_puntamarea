@@ -59,7 +59,7 @@ function GraciasContent() {
 
       {/* ── Fondo full-bleed ── */}
       <div className="absolute inset-0">
-        <img src="/renders/RENDER FINAL 2.jpg" alt="" className="h-full w-full object-cover" />
+        <img src="/renders/RENDER FINAL 2.png" alt="" className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-brown/60" />
       </div>
 

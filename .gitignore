@@ -15,3 +15,6 @@ node_modules
 .next/
 .DS_Store
 .vercel
+
+# Large media (excede límite 100MB de GitHub — subir aparte a CDN/Vercel Blob)
+public/hero-video.mp4

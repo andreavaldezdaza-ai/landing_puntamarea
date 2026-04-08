@@ -3,16 +3,18 @@
 import { useState, useCallback, useEffect, useRef } from "react"
 
 const galleryImages = [
-  { id: 1,  src: "/renders/RENDER FINAL 14.jpg", caption: "Vista exterior — frente al Caribe" },
-  { id: 2,  src: "/renders/RENDER FINAL 15.jpg", caption: "Acceso y jardines tropicales" },
-  { id: 3,  src: "/renders/RENDER FINAL 16.jpg", caption: "Piscina principal — área social" },
-  { id: 4,  src: "/renders/RENDER FINAL 17.jpg", caption: "Playa privada — 150 metros lineales" },
-  { id: 5,  src: "/renders/RENDER FINAL 18.jpg", caption: "Terraza residencial — vista al mar" },
-  { id: 6,  src: "/renders/RENDER FINAL 19.jpg", caption: "Área de bienestar y spa" },
-  { id: 7,  src: "/renders/RENDER FINAL 20.jpg", caption: "Beach Club & Restaurante" },
-  { id: 8,  src: "/renders/RENDER FINAL 21.jpg", caption: "Lobby de acceso — arquitectura de autor" },
-  { id: 9,  src: "/renders/RENDER FINAL 22.jpg", caption: "Sala de estar — Tipo D" },
-  { id: 10, src: "/renders/RENDER FINAL 23.jpg", caption: "Atardecer desde la terraza" },
+  { id: 1,  src: "/carrusel/RENDER FINAL 1.png",  caption: "Vista exterior — frente al Caribe" },
+  { id: 2,  src: "/carrusel/RENDER FINAL 2.png",  caption: "Acceso y jardines tropicales" },
+  { id: 3,  src: "/carrusel/RENDER FINAL 3.png",  caption: "Piscina principal — área social" },
+  { id: 4,  src: "/carrusel/RENDER FINAL 5.png",  caption: "Playa privada — 150 metros lineales" },
+  { id: 5,  src: "/carrusel/RENDER FINAL 6.jpg",  caption: "Terraza residencial — vista al mar" },
+  { id: 6,  src: "/carrusel/RENDER FINAL 7.jpg",  caption: "Área de bienestar y spa" },
+  { id: 7,  src: "/carrusel/RENDER FINAL 11.jpg", caption: "Beach Club & Restaurante" },
+  { id: 8,  src: "/carrusel/RENDER FINAL 13.jpg", caption: "Lobby de acceso — arquitectura de autor" },
+  { id: 9,  src: "/carrusel/RENDER FINAL 14.jpg", caption: "Sala de estar — Tipo D" },
+  { id: 10, src: "/carrusel/RENDER FINAL 19.jpg", caption: "Atardecer desde la terraza" },
+  { id: 11, src: "/carrusel/RENDER FINAL 25.jpg", caption: "Vegetación nativa y paisajismo" },
+  { id: 12, src: "/carrusel/RENDER FINAL 30.jpg", caption: "Atardecer sobre el horizonte" },
 ]
 
 export function GalleryCarousel() {
@@ -25,8 +27,8 @@ export function GalleryCarousel() {
   const goTo = useCallback((index: number) => {
     if (animating) return
     setAnimating(true)
-    setCurrent((index + total) % total)
-    setTimeout(() => setAnimating(false), 600)
+    setCurrent(((index % total) + total) % total)
+    setTimeout(() => setAnimating(false), 700)
   }, [animating, total])
 
   const prev = useCallback(() => goTo(current - 1), [current, goTo])
@@ -35,9 +37,11 @@ export function GalleryCarousel() {
   // Autoplay
   useEffect(() => {
     if (paused) return
-    const t = setInterval(next, 5000)
+    const t = setInterval(() => {
+      setCurrent((c) => (c + 1) % total)
+    }, 5000)
     return () => clearInterval(t)
-  }, [paused, next])
+  }, [paused, total])
 
   // Keyboard navigation
   useEffect(() => {
@@ -51,6 +55,9 @@ export function GalleryCarousel() {
 
   const pad = (n: number) => String(n).padStart(2, "0")
 
+  const leftIndex = (current - 1 + total) % total
+  const rightIndex = (current + 1) % total
+
   return (
     <section
       className="relative bg-sand"
@@ -59,14 +66,14 @@ export function GalleryCarousel() {
       onMouseLeave={() => setPaused(false)}
     >
       {/* ── Section header ───────────────────────────────────────── */}
-      <div className="mx-auto max-w-7xl px-6 pb-8 pt-20 lg:px-12 lg:pt-24">
+      <div className="mx-auto max-w-7xl px-6 pb-10 pt-20 lg:px-12 lg:pt-24">
         <div className="flex items-end justify-between">
           <div>
-            <p className="mb-3 font-sans text-[10px] font-medium tracking-[0.4em] text-gold uppercase">
+            <p className="mb-3 font-sans text-[10px] font-medium tracking-[0.4em] text-viveloo-taupe uppercase">
               La Visión
             </p>
-            <h2 className="font-serif text-4xl font-light text-brown md:text-5xl lg:text-[3.5rem]">
-              Espacios que <em>inspiran</em>
+            <h2 className="text-4xl font-sans font-light text-viveloo-black tracking-wide md:text-5xl lg:text-[3.5rem]">
+              Espacios que <span className="font-serif italic font-normal text-viveloo-brown lowercase">inspiran</span>
             </h2>
           </div>
           {/* Counter */}
@@ -81,10 +88,9 @@ export function GalleryCarousel() {
         </div>
       </div>
 
-      {/* ── Main image — full width, no border radius ─────────────── */}
+      {/* ── Stage horizontal — 3 imágenes (mobile: 1) ────────────── */}
       <div
-        className="relative w-full overflow-hidden"
-        style={{ aspectRatio: "21/9" }}
+        className="relative mx-auto w-full max-w-[1400px] px-4 lg:px-16"
         onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX }}
         onTouchEnd={(e) => {
           const diff = touchStartX.current - e.changedTouches[0].clientX
@@ -92,86 +98,115 @@ export function GalleryCarousel() {
           else if (diff < -50) prev()
         }}
       >
-        {galleryImages.map((img, i) => (
-          <div
-            key={img.id}
-            className="absolute inset-0 transition-opacity duration-700"
-            style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}
-            aria-hidden={i !== current}
+        <div className="flex items-center justify-center gap-3 md:gap-5">
+          {/* ── Imagen izquierda — solo desktop ── */}
+          <button
+            onClick={prev}
+            aria-label="Imagen anterior"
+            className="hidden md:block relative w-[26%] aspect-[4/3] overflow-hidden rounded-[6px] opacity-65 hover:opacity-95 transition-all duration-700 cursor-pointer"
           >
             <img
-              src={img.src}
-              alt={img.caption}
+              src={galleryImages[leftIndex].src}
+              alt={galleryImages[leftIndex].caption}
               className="h-full w-full object-cover"
               draggable="false"
             />
-            {/* Very subtle bottom gradient for caption legibility */}
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brown/30 to-transparent pointer-events-none" />
-          </div>
-        ))}
-
-        {/* Caption overlay — bottom left */}
-        <div className="absolute bottom-5 left-6 z-10 lg:left-12">
-          <p className="font-sans text-[11px] font-light tracking-wide text-white/80">
-            {galleryImages[current].caption}
-          </p>
-        </div>
-      </div>
-
-      {/* ── Controls row ─────────────────────────────────────────── */}
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-12">
-
-        {/* Progress bar */}
-        <div className="hidden flex-1 items-center gap-1 md:flex">
-          {galleryImages.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className="group relative h-px flex-1 bg-caramel/20 transition-all duration-300"
-              aria-label={`Imagen ${i + 1}`}
-            >
-              <span
-                className="absolute inset-y-0 left-0 bg-gold transition-all duration-500"
-                style={{ width: i === current ? "100%" : i < current ? "100%" : "0%" }}
-              />
-            </button>
-          ))}
-        </div>
-
-        {/* Mobile dots */}
-        <div className="flex flex-1 items-center justify-center gap-2 md:hidden">
-          {galleryImages.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`h-1.5 transition-all duration-300 ${
-                i === current ? "w-6 bg-gold" : "w-1.5 bg-caramel/30"
-              }`}
-              aria-label={`Imagen ${i + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Arrow navigation — right side */}
-        <div className="flex items-center gap-4 md:ml-10">
-          <button
-            onClick={prev}
-            className="group flex h-11 w-11 items-center justify-center border border-caramel/30 transition-all duration-300 hover:border-gold"
-            aria-label="Imagen anterior"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-caramel group-hover:text-gold transition-colors">
-              <path d="M10 2L4 8l6 6" />
-            </svg>
           </button>
+
+          {/* ── Imagen central — protagonista ── */}
+          <div className="relative w-full md:w-[40%] aspect-[4/3] overflow-hidden rounded-[8px] shadow-xl shadow-viveloo-brown/15">
+            {galleryImages.map((img, i) => (
+              <img
+                key={img.id}
+                src={img.src}
+                alt={img.caption}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+                  i === current ? "opacity-100" : "opacity-0"
+                }`}
+                draggable="false"
+              />
+            ))}
+            {/* Subtle bottom gradient */}
+            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-viveloo-black/35 to-transparent pointer-events-none" />
+          </div>
+
+          {/* ── Imagen derecha — solo desktop ── */}
           <button
             onClick={next}
-            className="group flex h-11 w-11 items-center justify-center border border-caramel/30 transition-all duration-300 hover:border-gold"
             aria-label="Siguiente imagen"
+            className="hidden md:block relative w-[26%] aspect-[4/3] overflow-hidden rounded-[6px] opacity-65 hover:opacity-95 transition-all duration-700 cursor-pointer"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-caramel group-hover:text-gold transition-colors">
-              <path d="M6 2l6 6-6 6" />
-            </svg>
+            <img
+              src={galleryImages[rightIndex].src}
+              alt={galleryImages[rightIndex].caption}
+              className="h-full w-full object-cover"
+              draggable="false"
+            />
           </button>
+        </div>
+
+        {/* ── Flechas flotantes — desktop ── */}
+        <button
+          onClick={prev}
+          aria-label="Imagen anterior"
+          className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 h-11 w-11 items-center justify-center bg-sand/90 backdrop-blur-sm border border-viveloo-taupe/30 hover:border-viveloo-taupe hover:bg-sand transition-all duration-300 group"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-viveloo-brown group-hover:text-viveloo-taupe transition-colors">
+            <path d="M10 2L4 8l6 6" />
+          </svg>
+        </button>
+        <button
+          onClick={next}
+          aria-label="Siguiente imagen"
+          className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 h-11 w-11 items-center justify-center bg-sand/90 backdrop-blur-sm border border-viveloo-taupe/30 hover:border-viveloo-taupe hover:bg-sand transition-all duration-300 group"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-viveloo-brown group-hover:text-viveloo-taupe transition-colors">
+            <path d="M6 2l6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+
+      {/* ── Caption + Controls ───────────────────────────────────── */}
+      <div className="mx-auto max-w-7xl px-6 pt-8 pb-20 lg:px-12 lg:pb-24">
+        <div className="flex flex-col items-center gap-6">
+          {/* Mobile arrows */}
+          <div className="flex items-center gap-4 md:hidden">
+            <button
+              onClick={prev}
+              className="flex h-11 w-11 items-center justify-center border border-viveloo-taupe/30 hover:border-viveloo-taupe transition-all duration-300"
+              aria-label="Imagen anterior"
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-viveloo-brown">
+                <path d="M10 2L4 8l6 6" />
+              </svg>
+            </button>
+            <button
+              onClick={next}
+              className="flex h-11 w-11 items-center justify-center border border-viveloo-taupe/30 hover:border-viveloo-taupe transition-all duration-300"
+              aria-label="Siguiente imagen"
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" className="text-viveloo-brown">
+                <path d="M6 2l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Progress bar */}
+          <div className="flex items-center gap-1 w-full max-w-md">
+            {galleryImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className="group relative h-px flex-1 bg-caramel/20 transition-all duration-300"
+                aria-label={`Imagen ${i + 1}`}
+              >
+                <span
+                  className="absolute inset-y-0 left-0 bg-viveloo-taupe transition-all duration-500"
+                  style={{ width: i === current ? "100%" : i < current ? "100%" : "0%" }}
+                />
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

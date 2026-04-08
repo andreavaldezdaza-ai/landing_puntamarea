@@ -1,123 +1,126 @@
 "use client"
 
-import { useState } from "react"
 import { useInView } from "@/hooks/use-in-view"
 
-const locationData = {
-  cartagena: {
-    title: "Cartagena — El Hub del Lujo",
+const locations = [
+  {
+    key: "cartagena",
+    heading: "Cartagena",
+    subtitle: "El Hub del Lujo",
     description:
       "Asegura tu patrimonio en un destino que combina apreciación constante y una demanda turística excepcional. Puntamarea ocupa uno de los pocos frentes de mar disponibles con acceso directo.",
+    image: "/cartagena.webp",
     stats: [
       { label: "Apreciación Récord", value: "12.7%", detail: "Incremento anual promedio en propiedades frente al mar" },
       { label: "Demanda Premium", value: "7.7M", detail: "Pasajeros en 2025 consolidan a la ciudad como destino líder" },
       { label: "Hub Turístico", value: "#1", detail: "Mayor proyección para eventos de alto perfil en Colombia" },
     ],
   },
-  baru: {
-    title: "Barú — La Isla en Transformación",
+  {
+    key: "baru",
+    heading: "Isla Barú",
+    subtitle: "La Isla en Transformación",
     description:
       "La inversión privada y pública más grande del Caribe colombiano. Un destino con infraestructura de clase mundial y conectividad privilegiada desde Cartagena.",
+    image: "/baru.jpg",
     stats: [
       { label: "Inversión Masiva", value: "+$200M", detail: "En infraestructura respaldado por Master Plan de Grupo Argos" },
       { label: "Conectividad", value: "45 min", detail: "Por vía terrestre desde Cartagena. 15 min acceso marítimo exclusivo" },
       { label: "Entorno Premium", value: "×6", detail: "Cadenas hoteleras de ultra-lujo en el entorno inmediato" },
     ],
   },
-}
+]
 
 export function LocationSection() {
-  const [activeTab, setActiveTab] = useState<"cartagena" | "baru">("cartagena")
-  const { ref, isInView } = useInView({ threshold: 0.2 })
-
-  const data = locationData[activeTab]
+  const { ref, isInView } = useInView({ threshold: 0.1 })
 
   return (
     <section
       ref={ref}
-      className="relative min-h-screen bg-sand py-24 lg:py-32"
+      className="relative bg-sand py-24 lg:py-32"
       id="ubicacion"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="grid gap-16 lg:grid-cols-2 lg:gap-24 lg:items-start">
 
-          {/* Left: Image — altura fija de referencia */}
-          <div
-            className={`relative aspect-[3/4] overflow-hidden lg:aspect-auto lg:h-[700px] transition-all duration-1000 ${
-              isInView ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
-            }`}
-          >
-            <img
-              src={activeTab === "cartagena" ? "/cartagena.webp" : "/baru.jpg"}
-              alt={data.title}
-              className="h-full w-full object-cover transition-all duration-700"
-            />
-          </div>
+        {/* Global Section Header */}
+        <div
+          className={`mb-20 lg:mb-24 transition-all duration-1000 ${
+            isInView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
+        >
+          <h2 className="text-4xl md:text-5xl font-sans font-light text-viveloo-black text-center">
+            El valor de lo{" "}
+            <span className="font-serif italic font-normal text-viveloo-brown lowercase">
+              irrepetible.
+            </span>
+          </h2>
+        </div>
 
-          {/* Right: Content — mismo alto que la imagen, CTA suelto abajo */}
-          <div
-            className={`flex flex-col transition-all duration-1000 delay-200 ${
-              isInView ? "translate-x-0 opacity-100" : "translate-x-12 opacity-0"
-            }`}
-          >
-            {/* Bloque acotado — misma altura que la imagen */}
-            <div className="flex flex-col justify-between lg:h-[700px]">
+        {/* Alternating Location Blocks */}
+        <div className="flex flex-col gap-24">
+          {locations.map((loc, i) => (
+            <div
+              key={loc.key}
+              className={`flex flex-col gap-12 lg:gap-16 ${
+                i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              } transition-all duration-1000 ${
+                isInView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+              }`}
+              style={{ transitionDelay: `${i * 200}ms` }}
+            >
+              {/* Image — card grande con radius sutil */}
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[2px] md:w-1/2">
+                <img
+                  src={loc.image}
+                  alt={loc.heading}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-              {/* Grupo superior: título + tabs + descripción */}
-              <div>
-                <h2 className="mb-10 font-serif text-4xl font-light leading-tight text-brown md:text-5xl lg:text-6xl text-balance">
-                  El valor de lo irrepetible.
-                </h2>
-
-                {/* Tab Toggle */}
-                <div className="mb-8 flex gap-8">
-                  {(["cartagena", "baru"] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`relative font-serif text-xl transition-colors duration-300 ${
-                        activeTab === tab ? "text-gold" : "text-brown/40 hover:text-brown"
-                      }`}
-                    >
-                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                      {activeTab === tab && (
-                        <span className="absolute -bottom-2 left-0 h-px w-full bg-gold" />
-                      )}
-                    </button>
-                  ))}
+              {/* Content */}
+              <div className="flex flex-col justify-between md:w-1/2 md:px-8 lg:px-12">
+                <div>
+                  <h2 className="text-5xl md:text-6xl font-serif italic text-viveloo-brown mb-4 capitalize">
+                    {loc.heading}
+                  </h2>
+                  {/* Chip / pill — micro-UI con rounded-full */}
+                  <span className="inline-flex items-center rounded-full border border-viveloo-taupe/30 bg-viveloo-taupe/5 px-4 py-1.5 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-viveloo-brown mb-8">
+                    {loc.subtitle}
+                  </span>
                 </div>
 
-                <p className="mt-10 font-sans text-base font-light leading-relaxed text-caramel/80">
-                  {data.description}
-                </p>
-              </div>
-
-              {/* Grupo inferior: stats — alineados con borde inferior de imagen */}
-              <div className="space-y-0">
-                {data.stats.map((stat, index) => (
-                  <div key={index} className="border-t border-gold/20 py-5">
-                    <p className="mb-1 font-sans text-[10px] font-light uppercase tracking-[0.35em] text-caramel">
-                      {stat.label}
-                    </p>
-                    <p className="font-serif text-3xl font-light text-gold">{stat.value}</p>
-                    <p className="mt-0.5 font-sans text-xs font-light text-brown/60 leading-relaxed">{stat.detail}</p>
-                  </div>
-                ))}
+                {/* Stats */}
+                <div className="mt-10 space-y-0">
+                  {loc.stats.map((stat, si) => (
+                    <div key={si} className="border-t border-viveloo-taupe/20 py-5">
+                      <h4 className="text-xl md:text-2xl font-sans text-viveloo-brown mb-1">
+                        {stat.label}
+                      </h4>
+                      <p className="text-sm md:text-base font-sans font-light text-viveloo-black/80 leading-relaxed">
+                        {stat.value} — {stat.detail}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+          ))}
+        </div>
 
-            {/* CTA — único elemento por debajo del borde inferior de la imagen */}
-            <div className="mt-8">
-              <a
-                href="#inversores"
-                className="group inline-flex w-fit items-center gap-2 border border-gold px-8 py-4 font-sans text-xs font-medium tracking-[0.2em] text-gold transition-all duration-300 hover:bg-gold hover:text-white uppercase"
-              >
-                Ver proyección de apreciación y ROI
-                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </a>
-            </div>
-          </div>
-
+        {/* CTA */}
+        <div
+          className={`mt-20 text-center transition-all duration-1000 ${
+            isInView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
+          style={{ transitionDelay: "600ms" }}
+        >
+          <a
+            href="#contacto"
+            className="group inline-flex items-center gap-2 bg-viveloo-taupe px-8 py-4 font-sans text-xs font-medium tracking-wide text-white uppercase transition-all duration-300 hover:bg-[#7a6852]"
+          >
+            Solicita tu análisis de inversión
+            <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
         </div>
       </div>
     </section>

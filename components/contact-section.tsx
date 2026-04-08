@@ -10,36 +10,53 @@ declare global {
   }
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+const WA_RE    = /^\+?[1-9]\d{7,14}$/
+
 export function ContactSection() {
-  const { ref, isInView } = useInView({ threshold: 0.2 })
+  const { ref, isInView } = useInView({ threshold: 0.15 })
   const router = useRouter()
   const [submitting, setSubmitting] = useState(false)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [focused, setFocused] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    whatsapp: "",
+    whatsapp: "+57 ",
     investment: "",
     consent: false,
   })
 
+  function validate() {
+    const e: Record<string, string> = {}
+    if (!formData.name.trim())          e.name       = "Ingresa tu nombre"
+    if (!EMAIL_RE.test(formData.email)) e.email      = "Email inválido"
+    const wa = formData.whatsapp.replace(/\s/g, "")
+    if (!WA_RE.test(wa))                e.whatsapp   = "Número inválido (mín. 8 dígitos)"
+    if (!formData.investment)           e.investment = "Selecciona un rango"
+    if (!formData.consent)              e.consent    = "Requerido"
+    return e
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const errs = validate()
+    if (Object.keys(errs).length) { setErrors(errs); return }
+    setErrors({})
     setSubmitting(true)
 
-    // Capture UTM params from URL
     const params = new URLSearchParams(window.location.search)
     const utmData = {
-      utm_source: params.get("utm_source") || "direct",
-      utm_medium: params.get("utm_medium") || "",
+      utm_source:   params.get("utm_source")   || "direct",
+      utm_medium:   params.get("utm_medium")   || "",
       utm_campaign: params.get("utm_campaign") || "",
-      utm_content: params.get("utm_content") || "",
-      utm_term: params.get("utm_term") || "",
+      utm_content:  params.get("utm_content")  || "",
+      utm_term:     params.get("utm_term")     || "",
     }
 
     const payload = { ...formData, ...utmData, timestamp: new Date().toISOString() }
 
     try {
-      // Send to webhook (Make/Zapier/n8n)
       const webhookUrl = process.env.NEXT_PUBLIC_WEBHOOK_URL
       if (webhookUrl) {
         await fetch(webhookUrl, {
@@ -48,11 +65,8 @@ export function ContactSection() {
           body: JSON.stringify(payload),
         })
       }
-    } catch {
-      // Silently continue — don't block redirect on webhook failure
-    }
+    } catch { /* silent */ }
 
-    // Push GTM / dataLayer event
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({
       event: "form_submit_puntamarea",
@@ -61,134 +75,181 @@ export function ContactSection() {
       ...utmData,
     })
 
-    // Redirect to thank-you page
     router.push("/gracias")
   }
+
+  /* Clase base de cada caja-campo */
+  const box = (name: string, hasErr: boolean) =>
+    `relative flex flex-col gap-1 rounded-[4px] border px-4 pt-3 pb-3 bg-white transition-all duration-200 ${
+      focused === name
+        ? "border-viveloo-taupe ring-2 ring-viveloo-taupe/20"
+        : hasErr
+        ? "border-red-300"
+        : "border-caramel/20 hover:border-caramel/40"
+    }`
+
+  const inputCls = "w-full bg-transparent font-sans text-sm font-light text-brown placeholder:text-caramel/40 focus:outline-none"
+  const labelCls = "font-sans text-[10px] font-medium tracking-[0.15em] text-caramel/60 uppercase"
+  const errMsg   = "font-sans text-[10px] text-red-400 mt-0.5"
 
   return (
     <section
       ref={ref}
-      className="relative min-h-screen bg-sand-deep py-24 lg:py-0"
+      className="relative bg-sand py-24 lg:py-0 min-h-screen"
       id="contacto"
     >
       <div className="mx-auto max-w-7xl lg:max-w-none">
-        <div className="grid lg:grid-cols-2">
-          {/* Left: Image */}
+        <div className="grid lg:grid-cols-2 lg:min-h-screen">
+
+          {/* ── Columna izquierda: Imagen (alineada al formulario con el mismo padding vertical) ── */}
           <div
-            className={`relative hidden min-h-[600px] lg:block lg:min-h-screen transition-all duration-1000 ${
+            className={`relative hidden lg:flex lg:py-24 pl-6 lg:pl-16 xl:pl-20 transition-all duration-1000 ${
               isInView ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
             }`}
           >
-            <img
-              src="/renders/RENDER FINAL 4.png"
-              alt="Residencias Puntamarea — Vista al mar"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-sand-deep/30" />
+            <div className="relative w-full overflow-hidden">
+              <img
+                src="/renders/RENDER FINAL 4.png"
+                alt="Residencias Puntamarea — Vista al mar"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-sand-deep/30" />
+            </div>
           </div>
 
-          {/* Right: Form */}
+          {/* ── Columna derecha: Formulario ── */}
           <div
-            className={`flex flex-col justify-center px-6 py-16 lg:px-16 lg:py-24 xl:px-24 transition-all duration-1000 delay-200 ${
+            className={`flex flex-col justify-center px-6 py-16 lg:px-16 xl:px-20 lg:py-24 transition-all duration-1000 delay-200 ${
               isInView ? "translate-x-0 opacity-100" : "translate-x-12 opacity-0"
             }`}
           >
-            {/* Header */}
-            <div className="mb-12">
-              <p className="mb-4 font-sans text-xs font-medium tracking-[0.3em] text-gold uppercase">
-                Acceso Exclusivo
+            {/* Encabezado */}
+            <div className="mb-8">
+              <p className="mb-3 font-sans text-xs font-medium tracking-[0.3em] text-viveloo-taupe uppercase">
+                Apertura Preferencial
               </p>
-              <h2 className="mb-4 font-serif text-3xl font-light leading-tight text-brown md:text-4xl lg:text-5xl text-balance">
-                Invertir es una decisión.
+              <h2 className="mb-3 text-3xl font-sans font-light text-viveloo-black tracking-wide leading-tight md:text-4xl text-balance">
+                Invertir es una <span className="font-serif italic font-normal text-viveloo-brown lowercase">decisión.</span>
                 <br />
-                <span className="italic text-gold">Pertenecer es un privilegio.</span>
+                Pertenecer es un <span className="font-serif italic font-normal text-viveloo-brown lowercase">privilegio.</span>
               </h2>
-              <p className="font-sans text-sm font-light text-caramel/80">
-                Agenda una cita privada con nuestro equipo de asesores.
+              <p className="font-sans text-sm font-light leading-relaxed text-caramel/70 max-w-sm">
+                Solo para inversores fundadores. Agenda tu cita privada antes del ajuste de precio de Fase 1.
               </p>
             </div>
 
-            {/* Form — inside card */}
-            <div className="border border-gold/20 bg-sand p-6 sm:p-8 lg:bg-transparent lg:border-transparent lg:p-0">
-              <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Name */}
-                <div>
+            {/* Tarjeta del formulario */}
+            <div className="border border-viveloo-taupe/20 bg-sand/60 p-6 sm:p-8 shadow-sm">
+
+              <form onSubmit={handleSubmit} noValidate className="space-y-3">
+
+                {/* Nombre */}
+                <div className={box("name", !!errors.name)}>
+                  <label className={labelCls}>Nombre completo</label>
                   <input
                     type="text"
-                    placeholder="Nombre Completo"
+                    placeholder="Tu nombre"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full border-b border-caramel/30 bg-transparent py-4 font-sans text-base font-light text-brown placeholder:text-caramel/50 focus:border-gold focus:outline-none transition-colors"
+                    onFocus={() => setFocused("name")}
+                    onBlur={() => setFocused(null)}
+                    className={inputCls}
                     required
                   />
+                  {errors.name && <p className={errMsg}>{errors.name}</p>}
                 </div>
 
-                {/* Email */}
+                {/* Email + WhatsApp en grid */}
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className={box("email", !!errors.email)}>
+                    <label className={labelCls}>Correo electrónico</label>
+                    <input
+                      type="email"
+                      placeholder="tu@email.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onFocus={() => setFocused("email")}
+                      onBlur={() => setFocused(null)}
+                      pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}"
+                      className={inputCls}
+                      required
+                    />
+                    {errors.email && <p className={errMsg}>{errors.email}</p>}
+                  </div>
+
+                  <div className={box("whatsapp", !!errors.whatsapp)}>
+                    <label className={labelCls}>WhatsApp</label>
+                    <input
+                      type="tel"
+                      placeholder="+57 300 000 0000"
+                      value={formData.whatsapp}
+                      onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+                      onFocus={() => setFocused("whatsapp")}
+                      onBlur={() => setFocused(null)}
+                      className={inputCls}
+                      required
+                    />
+                    {errors.whatsapp && <p className={errMsg}>{errors.whatsapp}</p>}
+                  </div>
+                </div>
+
+                {/* Rango de inversión — radio buttons en cajas */}
                 <div>
-                  <input
-                    type="email"
-                    placeholder="Correo electrónico"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full border-b border-caramel/30 bg-transparent py-4 font-sans text-base font-light text-brown placeholder:text-caramel/50 focus:border-gold focus:outline-none transition-colors"
-                    required
-                  />
+                  <p className="mb-2 font-sans text-[10px] font-medium tracking-[0.15em] text-caramel/60 uppercase">
+                    Rango de inversión
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    {[
+                      { value: "280M-500M COP", label: "$280M – $500M" },
+                      { value: "+500M COP",     label: "+$500M COP"   },
+                      { value: "USD 200K-400K", label: "USD $200K–$400K" },
+                      { value: "USD +400K",     label: "USD +$400K"   },
+                    ].map((opt) => (
+                      <label
+                        key={opt.value}
+                        className={`flex cursor-pointer items-center justify-center rounded-[4px] border px-2 py-3 text-center font-sans text-[11px] font-medium transition-all duration-150 ${
+                          formData.investment === opt.value
+                            ? "border-viveloo-taupe bg-viveloo-taupe/10 text-brown"
+                            : "border-caramel/20 bg-white text-caramel/60 hover:border-caramel/40"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="investment"
+                          value={opt.value}
+                          checked={formData.investment === opt.value}
+                          onChange={(e) => setFormData({ ...formData, investment: e.target.value })}
+                          className="sr-only"
+                          required
+                        />
+                        {opt.label}
+                      </label>
+                    ))}
+                  </div>
+                  {errors.investment && <p className={errMsg + " mt-1"}>{errors.investment}</p>}
                 </div>
 
-                {/* WhatsApp */}
-                <div>
-                  <input
-                    type="tel"
-                    placeholder="WhatsApp (con código de país)"
-                    value={formData.whatsapp}
-                    onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                    className="w-full border-b border-caramel/30 bg-transparent py-4 font-sans text-base font-light text-brown placeholder:text-caramel/50 focus:border-gold focus:outline-none transition-colors"
-                    required
-                  />
-                </div>
-
-                {/* Investment Range */}
-                <div>
-                  <select
-                    value={formData.investment}
-                    onChange={(e) => setFormData({ ...formData, investment: e.target.value })}
-                    className="w-full appearance-none border-b border-caramel/30 bg-transparent py-4 font-sans text-base font-light text-brown focus:border-gold focus:outline-none transition-colors cursor-pointer"
-                    required
-                  >
-                    <option value="" disabled className="text-caramel/50">
-                      Rango de inversión
-                    </option>
-                    <option value="280M-500M COP">$280M – $500M COP</option>
-                    <option value="+500M COP">+$500M COP</option>
-                    <option value="USD 200K-400K">USD $200,000 – $400,000</option>
-                    <option value="USD +400K">USD +$400,000</option>
-                  </select>
-                </div>
-
-                {/* Consent */}
-                <div className="flex items-start gap-3">
+                {/* Consentimiento */}
+                <div className="flex items-start gap-3 pt-1">
                   <input
                     type="checkbox"
                     id="consent"
                     checked={formData.consent}
                     onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-                    className="mt-1 h-4 w-4 accent-gold"
+                    className="mt-0.5 h-4 w-4 accent-[#917c62] shrink-0"
                     required
                   />
-                  <label
-                    htmlFor="consent"
-                    className="font-sans text-xs font-light leading-relaxed text-caramel/70"
-                  >
-                    Acepto la política de tratamiento de datos personales (Habeas Data) y
-                    autorizo el contacto por parte del equipo comercial de PUNTAMAREA.
+                  <label htmlFor="consent" className="font-sans text-xs font-light leading-relaxed text-caramel/60">
+                    Acepto la política de tratamiento de datos personales (Habeas Data) y autorizo el contacto por parte del equipo comercial de PUNTAMAREA.
                   </label>
                 </div>
+                {errors.consent && <p className={errMsg}>{errors.consent}</p>}
 
                 {/* Submit */}
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="group inline-flex w-full items-center justify-center gap-2 bg-gold px-8 py-4 font-sans text-sm font-medium tracking-wide text-white transition-all duration-300 hover:bg-gold/90 hover:shadow-lg disabled:opacity-70"
+                  className="group mt-2 inline-flex w-full items-center justify-center gap-2 bg-viveloo-taupe px-8 py-4 font-sans text-sm font-medium tracking-wide text-white uppercase transition-all duration-300 hover:bg-[#7a6852] hover:shadow-lg disabled:opacity-70"
                 >
                   {submitting ? "Enviando..." : "Agendar cita privada"}
                   {!submitting && (
@@ -196,7 +257,12 @@ export function ContactSection() {
                   )}
                 </button>
               </form>
+
+              <p className="mt-4 font-sans text-[10px] font-light text-center text-caramel/40">
+                Sin compromiso · Respuesta en menos de 2 horas
+              </p>
             </div>
+
           </div>
         </div>
       </div>

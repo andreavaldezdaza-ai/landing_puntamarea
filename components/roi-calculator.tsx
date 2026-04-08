@@ -57,11 +57,11 @@ export function RoiCalculator() {
             isInView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
           }`}
         >
-          <p className="mb-4 font-sans text-xs font-medium tracking-[0.35em] text-gold uppercase">
+          <p className="mb-4 font-sans text-xs font-medium tracking-[0.35em] text-viveloo-taupe uppercase">
             Herramienta de Proyección
           </p>
-          <h2 className="mb-4 font-serif text-4xl font-light text-brown md:text-5xl lg:text-6xl">
-            Tu inversión, proyectada.
+          <h2 className="mb-4 text-4xl font-sans font-light text-viveloo-black tracking-wide md:text-5xl lg:text-6xl">
+            Tu inversión, <span className="font-serif italic font-normal text-viveloo-brown lowercase">proyectada.</span>
           </h2>
           <p className="mx-auto max-w-md font-sans text-sm font-light leading-relaxed text-caramel/70">
             Selecciona tu nivel de inversión y visualiza el retorno estimado a 5 años, incluyendo apreciación y renta.
@@ -85,7 +85,7 @@ export function RoiCalculator() {
                   onClick={() => setTierIndex(i)}
                   className={`relative px-6 py-3 font-serif text-lg transition-all duration-300 ${
                     tierIndex === i
-                      ? "border border-gold text-gold"
+                      ? "border border-viveloo-taupe text-viveloo-taupe"
                       : "border border-brown/15 text-brown/40 hover:border-brown/30 hover:text-brown/70"
                   }`}
                 >
@@ -96,14 +96,14 @@ export function RoiCalculator() {
           </div>
 
           {/* ── Results Grid ──────────────────────────────────────── */}
-          <div className="grid grid-cols-2 gap-px bg-gold/10 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-px bg-viveloo-taupe/10 md:grid-cols-4">
 
             {/* ROI Año 1 */}
             <div className="bg-sand-deep p-5 text-center sm:p-8">
               <p className="mb-1 font-sans text-[9px] font-medium tracking-[0.35em] text-caramel/50 uppercase">
                 ROI Año 1
               </p>
-              <p className="font-serif text-2xl font-light text-gold sm:text-3xl md:text-4xl">
+              <p className="font-serif text-2xl font-light text-viveloo-taupe sm:text-3xl md:text-4xl">
                 +{formatCOP(projections.year1ROI)}
               </p>
               <p className="mt-1 font-sans text-[10px] text-caramel/50">
@@ -116,7 +116,7 @@ export function RoiCalculator() {
               <p className="mb-1 font-sans text-[9px] font-medium tracking-[0.35em] text-caramel/50 uppercase">
                 Renta Anual Est.
               </p>
-              <p className="font-serif text-2xl font-light text-gold sm:text-3xl md:text-4xl">
+              <p className="font-serif text-2xl font-light text-viveloo-taupe sm:text-3xl md:text-4xl">
                 {formatCOP(projections.year1Rental)}
               </p>
               <p className="mt-1 font-sans text-[10px] text-caramel/50">
@@ -129,7 +129,7 @@ export function RoiCalculator() {
               <p className="mb-1 font-sans text-[9px] font-medium tracking-[0.35em] text-caramel/50 uppercase">
                 Valor a 5 Años
               </p>
-              <p className="font-serif text-2xl font-light text-gold sm:text-3xl md:text-4xl">
+              <p className="font-serif text-2xl font-light text-viveloo-taupe sm:text-3xl md:text-4xl">
                 {formatCOP(projections.year5Value)}
               </p>
               <p className="mt-1 font-sans text-[10px] text-caramel/50">
@@ -142,7 +142,7 @@ export function RoiCalculator() {
               <p className="mb-1 font-sans text-[9px] font-medium tracking-[0.35em] text-caramel/50 uppercase">
                 Ganancia Total 5A
               </p>
-              <p className="font-serif text-2xl font-light text-gold sm:text-3xl md:text-4xl">
+              <p className="font-serif text-2xl font-light text-viveloo-taupe sm:text-3xl md:text-4xl">
                 +{formatCOP(projections.totalGain)}
               </p>
               <p className="mt-1 font-sans text-[10px] text-caramel/50">
@@ -158,7 +158,7 @@ export function RoiCalculator() {
             </p>
             <a
               href="#contacto"
-              className="group inline-flex shrink-0 items-center gap-2 border border-gold px-8 py-4 font-sans text-xs font-medium tracking-[0.2em] text-gold transition-all duration-300 hover:bg-gold hover:text-white uppercase"
+              className="group inline-flex shrink-0 items-center gap-2 bg-viveloo-taupe px-8 py-4 font-sans text-xs font-medium tracking-wide text-white uppercase transition-all duration-300 hover:bg-[#7a6852]"
             >
               Hablar con un asesor
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

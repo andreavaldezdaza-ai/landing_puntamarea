@@ -7,7 +7,7 @@ import Image from "next/image"
 const NAV_LINKS = [
   { label: "Ubicación",   href: "#ubicacion" },
   { label: "Proyecto",    href: "#proyecto" },
-  { label: "Experiencia", href: "#amenidades" },
+  { label: "Amenidades", href: "#amenidades" },
   { label: "Residencias", href: "#residencias" },
   { label: "Inversión",   href: "#inversores" },
   { label: "Contacto",    href: "#contacto" },
@@ -37,23 +37,13 @@ function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-sand/90 backdrop-blur-md border-b border-gold/10 shadow-sm"
-            : "bg-transparent"
+            ? "bg-sand/90 backdrop-blur-md border-b border-viveloo-taupe/10 shadow-sm"
+            : "bg-gradient-to-b from-viveloo-black/35 via-viveloo-black/15 to-transparent"
         }`}
       >
         <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4 lg:px-10">
-          {/* Logo */}
-          <a href="#" className="flex items-center">
-            <Image
-              src="/logo-puntamarea.png"
-              alt="PUNTAMAREA"
-              width={220}
-              height={52}
-              className={`h-9 w-auto object-contain transition-all duration-300 md:h-11 ${
-                scrolled || menuOpen ? "brightness-0" : "brightness-0 invert"
-              }`}
-            />
-          </a>
+          {/* Logo placeholder — intentionally empty */}
+          <div aria-hidden className="h-7 md:h-8" />
 
           {/* Nav links — desktop only */}
           <div
@@ -77,7 +67,7 @@ function Navbar() {
             href="#contacto"
             className={`hidden md:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-light tracking-wide transition-all duration-300 ${
               scrolled
-                ? "bg-gold text-white hover:bg-gold/90"
+                ? "bg-viveloo-taupe text-white hover:bg-[#7a6852]"
                 : "border border-white/60 text-white hover:bg-white/10"
             }`}
           >
@@ -124,7 +114,7 @@ function Navbar() {
               key={item.label}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className={`block font-serif text-3xl font-light text-brown/80 transition-all duration-300 hover:text-gold ${
+              className={`block font-serif text-3xl font-light text-brown/80 transition-all duration-300 hover:text-viveloo-taupe ${
                 menuOpen ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
               }`}
               style={{ transitionDelay: menuOpen ? `${i * 60}ms` : "0ms" }}
@@ -139,7 +129,7 @@ function Navbar() {
           <a
             href="#contacto"
             onClick={() => setMenuOpen(false)}
-            className="inline-flex items-center gap-2 border border-gold px-8 py-4 font-sans text-xs font-medium tracking-[0.2em] text-gold transition-all duration-300 hover:bg-gold hover:text-white uppercase"
+            className="inline-flex items-center gap-2 border border-viveloo-taupe bg-viveloo-taupe px-8 py-4 font-sans text-xs font-medium tracking-wide text-white uppercase transition-all duration-300 hover:bg-[#7a6852]"
           >
             Agendar Asesoría
             <span>→</span>
@@ -159,7 +149,7 @@ function Navbar() {
 function StatItem({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex flex-col items-center text-center px-3 py-4 md:px-4">
-      <span className="font-serif text-lg font-light text-gold leading-none md:text-2xl">
+      <span className="font-serif text-lg font-light text-viveloo-taupe leading-none md:text-2xl">
         {value}
       </span>
       <span className="mt-1.5 font-sans text-[9px] font-light uppercase tracking-[0.12em] text-caramel leading-tight max-w-[100px] md:text-[10px] md:tracking-[0.15em] md:max-w-[110px]">
@@ -236,7 +226,7 @@ export function HeroSection() {
           className="absolute inset-0 hidden h-full w-full object-cover md:block"
           poster="/renders/RENDER FINAL 9.jpg"
         >
-          <source src="/hero.mp4" type="video/mp4" />
+          <source src="/hero-video.mp4" type="video/mp4" />
         </video>
 
         {/* ── Overlays cálidos sutiles ── */}
@@ -269,7 +259,7 @@ export function HeroSection() {
 
           {/* Línea dorada animada */}
           <div
-            className={`mb-5 h-px bg-gold origin-left transition-all duration-700 delay-300 ${
+            className={`mb-5 h-px bg-viveloo-taupe origin-left transition-all duration-700 delay-300 ${
               visible ? "w-20 opacity-100" : "w-0 opacity-0"
             }`}
           />
@@ -319,9 +309,9 @@ export function HeroSection() {
         </div>
 
         {/* ── Stats bar inferior ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 bg-sand-deep/88 backdrop-blur-md border-t border-gold/15">
+        <div className="absolute bottom-0 left-0 right-0 z-10 bg-sand-deep/88 backdrop-blur-md border-t border-viveloo-taupe/15">
           <div className="mx-auto max-w-7xl">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gold/20">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-viveloo-taupe/20">
               <StatItem value="Desde $280M" label="Lotes en Etapa 1" />
               <StatItem value="Beach Club" label="& Restaurante" />
               <StatItem value="Wellness" label="Pádel, Yoga y Gimnasio" />

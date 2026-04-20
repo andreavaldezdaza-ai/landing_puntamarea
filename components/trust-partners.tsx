@@ -42,7 +42,7 @@ export function TrustPartners() {
         <div className="max-w-2xl mx-auto px-6">
           <p className="text-sm md:text-base font-sans font-light text-gray-500 leading-relaxed">
             <strong className="font-medium text-gray-700">Gestión & Operación:</strong>{" "}
-            Acceda de forma voluntaria a nuestro operador aliado (Ahead). Una solución profesional para una inversión sin esfuerzo y retornos sostenibles.
+            Accede de forma voluntaria a nuestro operador aliado (Ahead). Una solución profesional para una inversión sin esfuerzo y retornos sostenibles.
           </p>
         </div>
       </div>

@@ -20,21 +20,21 @@ export function TrustPartners() {
             alt="Inspira Diseño & Construcción"
             width={200}
             height={200}
-            className="h-14 md:h-20 w-auto object-contain filter grayscale brightness-0 opacity-50 hover:opacity-80 transition-all duration-300"
+            className="order-2 md:order-1 h-14 md:h-20 w-auto object-contain filter grayscale brightness-0 opacity-50 hover:opacity-80 transition-all duration-300"
           />
           <Image
             src="/logo-aliado-2.png"
             alt="Viveloo Inmobiliaria"
             width={200}
             height={200}
-            className="h-7 md:h-10 w-auto object-contain filter grayscale brightness-0 opacity-50 hover:opacity-80 transition-all duration-300"
+            className="order-1 md:order-2 h-7 md:h-10 w-auto object-contain filter grayscale brightness-0 opacity-50 hover:opacity-80 transition-all duration-300"
           />
           <Image
             src="/logo-aliado-3.png"
             alt="Ahead"
             width={200}
             height={200}
-            className="h-16 md:h-24 w-auto object-contain filter grayscale brightness-0 opacity-50 hover:opacity-80 transition-all duration-300"
+            className="order-3 h-16 md:h-24 w-auto object-contain filter grayscale brightness-0 opacity-50 hover:opacity-80 transition-all duration-300"
           />
         </div>
 

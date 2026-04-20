@@ -153,9 +153,11 @@
   display: none;
 }
 
-/* Bloquear rubber-band horizontal sin romper position:sticky (sin overflow-x hidden) */
+/* Bloquear rubber-band + overflow horizontal sin romper position:sticky
+   (overflow-x: clip NO crea nuevo scroll container, a diferencia de overflow-x: hidden) */
 html, body {
   overscroll-behavior-x: none;
+  overflow-x: clip;
 }
 
 /* ROI slider (página /gracias) */

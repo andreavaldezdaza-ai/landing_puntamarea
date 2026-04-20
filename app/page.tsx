@@ -52,7 +52,7 @@ export default function Home() {
       <WhatsAppButton />
 
       {/* Footer */}
-      <footer className="relative bg-sand pt-20 md:pt-24 pb-6">
+      <footer className="relative bg-sand pt-8 md:pt-24 pb-8 md:pb-6">
         <div className="mx-auto max-w-6xl px-6 lg:px-12">
           {/* Top: logo + tagline + social */}
           <div className="flex flex-col items-center text-center">
@@ -61,7 +61,7 @@ export default function Home() {
               alt="Viveloo Inmobiliaria"
               width={500}
               height={90}
-              className="h-14 md:h-16 w-auto object-contain"
+              className="h-20 md:h-16 w-auto object-contain"
             />
 
             {/* Social icons */}

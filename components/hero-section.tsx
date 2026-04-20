@@ -170,14 +170,16 @@ export function HeroSection() {
   const [visible, setVisible] = useState(false)
   const [slideIndex, setSlideIndex] = useState(0)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const touchStartX = useRef<number | null>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 150)
     return () => clearTimeout(timer)
   }, [])
 
-  // Auto-advance slides every 4s
+  // Auto-advance slides every 4s — solo en desktop (mobile usa imagen fija)
   useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches) return
     const interval = setInterval(() => {
       setSlideIndex((i) => (i + 1) % MOBILE_SLIDES.length)
     }, 4000)
@@ -187,7 +189,7 @@ export function HeroSection() {
   return (
     <>
       <Navbar />
-      <section className="relative h-screen min-h-[600px] w-full overflow-hidden">
+      <section className="relative h-screen min-h-[600px] w-full overflow-hidden touch-pan-y">
         {/* ── Slideshow fondo — mobile ── */}
         <div className="absolute inset-0 md:hidden">
           {MOBILE_SLIDES.map((src, i) => (
@@ -202,19 +204,6 @@ export function HeroSection() {
           ))}
         </div>
 
-        {/* ── Indicadores de slide — mobile ── */}
-        <div className="absolute bottom-[200px] left-1/2 z-10 -translate-x-1/2 flex gap-1.5 md:hidden">
-          {MOBILE_SLIDES.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setSlideIndex(i)}
-              className={`h-px transition-all duration-300 ${
-                i === slideIndex ? "w-6 bg-white" : "w-3 bg-white/40"
-              }`}
-              aria-label={`Imagen ${i + 1}`}
-            />
-          ))}
-        </div>
 
         {/* ── Video de fondo — desktop ── */}
         <video
@@ -229,13 +218,14 @@ export function HeroSection() {
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
 
-        {/* ── Overlays cálidos sutiles ── */}
-        <div className="absolute inset-0 bg-gradient-to-br from-stone-800/38 via-stone-700/14 to-stone-800/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-900/42 via-stone-900/10 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/28 via-transparent to-transparent" />
+        {/* ── Overlays cálidos — móvil: gradiente completo para legibilidad ── */}
+        <div className="absolute inset-0 md:hidden bg-gradient-to-b from-stone-900/60 via-stone-900/55 to-stone-900/70" />
+        {/* ── Overlays cálidos — desktop: L→R fuerte donde está el texto ── */}
+        <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-stone-900/65 via-stone-900/25 to-transparent" />
+        <div className="absolute inset-0 hidden md:block bg-gradient-to-t from-stone-900/28 via-transparent to-transparent" />
 
         {/* ── Contenido principal ── */}
-        <div className="relative z-10 flex h-full flex-col justify-center px-6 pb-52 md:pb-28 lg:px-16 xl:px-24">
+        <div className="relative z-10 flex h-full flex-col justify-center items-center text-center md:items-start md:text-left px-6 pb-52 md:pb-28 lg:px-16 xl:px-24">
           {/* Badge */}
           <div
             className={`mb-6 transition-all duration-700 ${
@@ -247,15 +237,29 @@ export function HeroSection() {
             </span>
           </div>
 
-          {/* H1 */}
+          {/* H1 — desktop: texto, móvil: logo imagen */}
           <h1
-            className={`font-serif font-light text-white leading-[0.9] tracking-[0.08em] mb-5 transition-all duration-1000 delay-200 ${
+            className={`hidden md:block font-serif font-light text-white leading-[0.9] tracking-[0.08em] mb-5 transition-all duration-1000 delay-200 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
             style={{ fontSize: "clamp(3rem, 9vw, 8.5rem)" }}
           >
             PUNTAMAREA
           </h1>
+          <div
+            className={`md:hidden mb-5 transition-all duration-1000 delay-200 ${
+              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <Image
+              src="/logo-blanco.png"
+              alt="Puntamarea"
+              width={520}
+              height={180}
+              priority
+              className="w-[420px] max-w-none h-auto mx-auto"
+            />
+          </div>
 
           {/* Línea dorada animada */}
           <div
@@ -276,11 +280,11 @@ export function HeroSection() {
 
           {/* Subtítulo */}
           <p
-            className={`font-sans font-light text-white/70 text-sm md:text-[15px] max-w-md leading-relaxed mb-10 transition-all duration-700 delay-500 ${
+            className={`font-sans font-light text-white/90 text-sm md:text-[15px] max-w-md mx-auto md:mx-0 leading-relaxed mb-10 transition-all duration-700 delay-500 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            Lotes exclusivos con amenidades de estilo resort con acceso directo a 150m de frente de playa en Barú.
+            Lotes exclusivos con amenidades estilo resort con acceso directo a 150m de frente de playa en Barú.
           </p>
 
           {/* CTA */}

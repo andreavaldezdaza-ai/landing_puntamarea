@@ -95,7 +95,7 @@ export function ContactSection() {
   return (
     <section
       ref={ref}
-      className="relative bg-sand py-24 lg:py-0 min-h-screen"
+      className="relative bg-sand py-10 lg:py-0 lg:min-h-screen"
       id="contacto"
     >
       <div className="mx-auto max-w-7xl lg:max-w-none">
@@ -119,23 +119,50 @@ export function ContactSection() {
 
           {/* ── Columna derecha: Formulario ── */}
           <div
-            className={`flex flex-col justify-center px-6 py-16 lg:px-16 xl:px-20 lg:py-24 transition-all duration-1000 delay-200 ${
+            className={`flex flex-col justify-center px-6 py-6 lg:px-16 xl:px-20 lg:py-24 transition-all duration-1000 delay-200 ${
               isInView ? "translate-x-0 opacity-100" : "translate-x-12 opacity-0"
             }`}
           >
             {/* Encabezado */}
-            <div className="mb-8">
+            <div className="mb-8 text-center md:text-left">
               <p className="mb-3 font-sans text-xs font-medium tracking-[0.3em] text-viveloo-taupe uppercase">
                 Apertura Preferencial
               </p>
-              <h2 className="mb-3 text-3xl font-sans font-light text-viveloo-black tracking-wide leading-tight md:text-4xl text-balance">
+              <h2 className="mb-3 text-[22px] font-sans font-light text-viveloo-black tracking-wide leading-tight md:text-4xl text-balance">
                 Invertir es una <span className="font-serif italic font-normal text-viveloo-brown lowercase">decisión.</span>
                 <br />
                 Pertenecer es un <span className="font-serif italic font-normal text-viveloo-brown lowercase">privilegio.</span>
               </h2>
-              <p className="font-sans text-sm font-light leading-relaxed text-caramel/70 max-w-sm">
+              <p className="font-sans text-sm font-light leading-relaxed text-caramel/70 max-w-sm mx-auto md:mx-0">
                 Solo para inversores fundadores. Agenda tu cita privada antes del ajuste de precio de Fase 1.
               </p>
+            </div>
+
+            {/* Beneficios al inscribirse */}
+            <div className="mb-6 border-t border-b border-viveloo-taupe/20 py-5">
+              <p className="mb-3 font-sans text-[10px] font-semibold tracking-[0.25em] text-viveloo-taupe uppercase text-center md:text-left">
+                Al agendar recibes
+              </p>
+              <ul className="flex flex-col gap-2.5 mx-auto md:mx-0 max-w-sm">
+                <li className="flex items-start gap-3 justify-center md:justify-start">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0 text-viveloo-brown">
+                    <path d="M3 3v18h18" />
+                    <path d="m7 15 4-4 4 4 5-6" />
+                  </svg>
+                  <span className="font-sans text-sm font-light text-viveloo-black leading-snug">
+                    Proyección ROI personalizada
+                  </span>
+                </li>
+                <li className="flex items-start gap-3 justify-center md:justify-start">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0 text-viveloo-brown">
+                    <rect x="4" y="3" width="16" height="18" rx="2" />
+                    <path d="M9 7h6M9 11h6M9 15h4" />
+                  </svg>
+                  <span className="font-sans text-sm font-light text-viveloo-black leading-snug">
+                    Guía visa inversionista <span className="text-caramel/70">USA · EU</span>
+                  </span>
+                </li>
+              </ul>
             </div>
 
             {/* Tarjeta del formulario */}

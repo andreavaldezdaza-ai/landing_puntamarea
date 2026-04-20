@@ -40,8 +40,8 @@ export function AmenitiesSection() {
 
       {/* Global Section Header */}
       <div className="w-full py-16 md:py-24 bg-sand relative z-10">
-        <h2 className="text-4xl md:text-5xl font-sans font-light text-viveloo-black text-center">
-          Where every{" "}
+        <h2 className="text-[34px] md:text-5xl font-sans font-light text-viveloo-black text-center leading-tight">
+          Where every<br className="md:hidden" />{" "}
           <span className="font-serif italic text-viveloo-brown lowercase">moment is ours</span>
         </h2>
       </div>
@@ -68,7 +68,7 @@ export function AmenitiesSection() {
             </div>
 
             {/* Text Container (40%) */}
-            <div className="w-full h-[50vh] md:h-full md:w-[40%] bg-sand flex flex-col justify-end pb-16 md:pb-24 px-10 md:px-16 lg:px-24 relative overflow-hidden">
+            <div className="w-full h-[50vh] md:h-full md:w-[40%] bg-sand flex flex-col justify-start pt-8 md:justify-end md:pt-0 pb-8 md:pb-24 px-10 md:px-16 lg:px-24 relative overflow-hidden">
 
               {/* Decorative mark — Puntamarea rosette (alternating L/R) */}
               <div
@@ -94,7 +94,7 @@ export function AmenitiesSection() {
                 className="relative z-10 max-w-sm mx-auto md:mx-0"
               >
                 {/* Refined Dual-Typography Title */}
-                <h3 className="text-3xl md:text-4xl font-sans font-light text-viveloo-black mb-4 leading-tight">
+                <h3 className="text-[26px] md:text-4xl font-sans font-light text-viveloo-black mb-4 leading-tight">
                   {amenity.titlePrefix} <br className="hidden md:block" />
                   <span className="font-serif italic text-viveloo-brown capitalize">
                     {amenity.titleAccent}

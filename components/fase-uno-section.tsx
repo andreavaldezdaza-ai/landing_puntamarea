@@ -46,7 +46,7 @@ function Countdown() {
   const pad = (n: number) => String(n).padStart(2, "0")
 
   return (
-    <div className="flex items-end gap-3 sm:gap-5">
+    <div className="flex items-end justify-center md:justify-start gap-3 sm:gap-5">
       {[
         { value: timeLeft.days,    label: "Días" },
         { value: timeLeft.hours,   label: "Horas" },
@@ -78,15 +78,15 @@ export function FaseUnoSection() {
 
         {/* Header */}
         <div
-          className={`mb-16 lg:mb-20 transition-all duration-700 ${
+          className={`mb-16 lg:mb-20 text-center md:text-left transition-all duration-700 ${
             isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
           <p className="mb-4 font-sans text-xs font-medium tracking-[0.3em] text-viveloo-taupe uppercase">
             Oportunidad de Inversión
           </p>
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <h2 className="text-3xl font-sans font-light text-viveloo-black tracking-wide leading-tight md:text-4xl lg:text-5xl text-balance max-w-xl">
+          <div className="flex flex-col items-center gap-6 md:items-stretch lg:flex-row lg:items-end lg:justify-between">
+            <h2 className="text-[26px] font-sans font-light text-viveloo-black tracking-wide leading-tight md:text-4xl lg:text-5xl text-balance max-w-xl">
               Por qué Fase 1 es{" "}
               <span className="font-serif italic font-normal text-viveloo-brown lowercase">diferente</span>
             </h2>
@@ -105,7 +105,7 @@ export function FaseUnoSection() {
           {BENEFITS.map((b, i) => (
             <div
               key={b.number}
-              className={`bg-sand p-8 lg:p-10 transition-all duration-700 ${
+              className={`bg-sand p-8 lg:p-10 text-center sm:text-left transition-all duration-700 ${
                 isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: `${i * 100 + 200}ms` }}

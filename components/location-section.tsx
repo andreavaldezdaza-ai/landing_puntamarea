@@ -109,7 +109,7 @@ function LocationBlock({ loc, index }: { loc: (typeof locations)[number]; index:
       </motion.div>
 
       {/* Contenido */}
-      <div className="flex flex-col justify-between md:w-1/2 md:px-8 lg:px-12">
+      <div className="flex flex-col justify-between md:w-1/2 md:px-8 lg:px-12 text-center md:text-left">
         <div>
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
@@ -143,9 +143,9 @@ function LocationBlock({ loc, index }: { loc: (typeof locations)[number]; index:
               {/* Línea de acento izquierda que crece al entrar en viewport + hover */}
               <motion.span
                 initial={{ width: 0 }}
-                animate={inView ? { width: "40%" } : {}}
+                animate={inView ? { width: "100%" } : {}}
                 transition={{ duration: 1, delay: 0.9 + si * 0.15, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute -top-px left-0 h-px bg-viveloo-brown transition-[width] duration-500 group-hover/stat:!w-full"
+                className="absolute -top-px left-0 h-px bg-viveloo-brown md:!w-[40%] md:group-hover/stat:!w-full md:transition-[width] md:duration-500"
               />
 
               <h4 className="text-xl md:text-2xl font-sans text-viveloo-brown mb-1">
@@ -172,7 +172,7 @@ export function LocationSection() {
   return (
     <section
       ref={ref}
-      className="relative bg-sand py-24 lg:py-32"
+      className="relative bg-sand pt-24 pb-16 lg:pt-32 lg:pb-20"
       id="ubicacion"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-12">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useInView } from "@/hooks/use-in-view"
 
 const residences = [
@@ -88,8 +88,8 @@ function LayersIcon() {
 
 function SpacesIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-viveloo-taupe">
-      <path d="M2 12h6l3-9 3 18 3-9h5" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-viveloo-taupe">
+      <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9.5Z" />
     </svg>
   )
 }
@@ -98,6 +98,7 @@ function Carousel({ images, alt }: { images: string[]; alt: string }) {
   const [index, setIndex] = useState(0)
   const [interactionTick, setInteractionTick] = useState(0)
   const total = images.length
+  const touchStartX = useRef<number | null>(null)
 
   // Auto-advance — restarts whenever the user interacts (interactionTick changes)
   useEffect(() => {
@@ -118,8 +119,23 @@ function Carousel({ images, alt }: { images: string[]; alt: string }) {
     setInteractionTick((t) => t + 1)
   }
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current
+    if (deltaX > 50) prev()
+    else if (deltaX < -50) next()
+    touchStartX.current = null
+  }
+
   return (
-    <div className="relative overflow-hidden group">
+    <div
+      className="relative overflow-hidden group touch-pan-y"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       <div className="relative aspect-[4/5] w-full">
         {images.map((src, i) => (
           <img
@@ -137,7 +153,7 @@ function Carousel({ images, alt }: { images: string[]; alt: string }) {
       <button
         onClick={prev}
         aria-label="Imagen anterior"
-        className="absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center bg-white/80 text-viveloo-black backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white"
+        className="absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)] opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:scale-110"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="m15 18-6-6 6-6" />
@@ -148,7 +164,7 @@ function Carousel({ images, alt }: { images: string[]; alt: string }) {
       <button
         onClick={next}
         aria-label="Siguiente imagen"
-        className="absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center bg-white/80 text-viveloo-black backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white"
+        className="absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)] opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:scale-110"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="m9 18 6-6-6-6" />
@@ -180,7 +196,7 @@ export function ResidencesSection() {
   return (
     <section
       ref={ref}
-      className="relative bg-sand py-24 lg:py-32"
+      className="relative bg-sand py-12 lg:py-32"
       id="residencias"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
@@ -226,7 +242,7 @@ export function ResidencesSection() {
             <h3 className="mb-6 font-serif text-3xl font-light italic text-brown md:text-4xl">
               {active.name}
             </h3>
-            <p className="mb-10 max-w-md font-sans text-base font-light leading-relaxed text-caramel/80">
+            <p className="hidden md:block mb-10 max-w-md font-sans text-base font-light leading-relaxed text-caramel/80">
               {active.description}
             </p>
 
@@ -282,7 +298,7 @@ export function ResidencesSection() {
             <a
               href="/brochure-puntamarea.pdf"
               download="BROCHURE Puntamarea.pdf"
-              className="inline-flex w-fit items-center justify-center gap-2 bg-viveloo-taupe px-10 py-4 font-sans text-xs font-medium tracking-wide text-white uppercase transition-all duration-300 hover:bg-[#7a6852]"
+              className="inline-flex w-fit items-center justify-center gap-2 bg-viveloo-taupe px-10 py-4 font-sans text-xs font-medium tracking-wide text-white uppercase transition-all duration-300 hover:bg-[#7a6852] mx-auto md:mx-0"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M12 2v13M7 11l5 5 5-5M4 20h16" />

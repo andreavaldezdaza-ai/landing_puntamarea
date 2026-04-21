@@ -20,7 +20,7 @@ const montserrat = Montserrat({
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5W347F4H"
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "2036629853904012"
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://landing-puntamarea.vercel.app"
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://puntamarea.viveloo.co"
 
 const TITLE = "PUNTAMAREA | Residencias de Lujo en Barú, Cartagena"
 const DESCRIPTION = "209 residencias de lujo con más de 150 metros de playa privada en Barú, Colombia. ROI proyectado 29.9% en Año 1. Inversión exclusiva Viveloo. Fase 1 en lanzamiento."

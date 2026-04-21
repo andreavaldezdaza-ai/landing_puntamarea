@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía Visa de Inversionista en Colombia · PUNTAMAREA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand: #F7F3EC;
+      --sand-deep: #EDE8E0;
+      --viveloo-black: #111111;
+      --viveloo-brown: #66523c;
+      --viveloo-taupe: #917c62;
+      --caramel: #6B6B6B;
+      --divider: rgba(145, 124, 98, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    html, body {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 300;
+      color: var(--viveloo-black);
+      background: #ddd;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      gap: 12px;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--sand);
+      padding: 22mm 22mm;
+      position: relative;
+      page-break-after: always;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page:last-child { page-break-after: auto; }
+
+    /* ── Utility classes ───────────────────────────────── */
+    .overline {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--viveloo-taupe);
+    }
+    .overline-divider {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .overline-divider::before,
+    .overline-divider::after {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--viveloo-taupe);
+    }
+    .title-xl {
+      font-size: 44px;
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      color: var(--viveloo-black);
+      margin: 14px 0 18px;
+    }
+    .title-lg {
+      font-size: 32px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--viveloo-black);
+      margin: 12px 0 16px;
+    }
+    .accent {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--viveloo-brown);
+      text-transform: lowercase;
+    }
+    .body-text {
+      font-size: 11.5px;
+      line-height: 1.75;
+      color: var(--caramel);
+      margin-bottom: 14px;
+    }
+    .body-text strong {
+      color: var(--viveloo-black);
+      font-weight: 500;
+    }
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--viveloo-taupe);
+      margin: 24px 0;
+    }
+    .page-number {
+      position: absolute;
+      bottom: 14mm;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: rgba(107, 107, 107, 0.4);
+    }
+
+    /* Roseta watermark decorativa */
+    .roseta {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      opacity: 0.035;
+      background-color: var(--viveloo-brown);
+      -webkit-mask: url('../public/puntamarea-mark.png') center/contain no-repeat;
+      mask: url('../public/puntamarea-mark.png') center/contain no-repeat;
+      pointer-events: none;
+    }
+
+    /* ── Page 1: Cover ─────────────────────────────────── */
+    .cover {
+      background: var(--viveloo-black);
+      color: var(--sand);
+      padding: 0;
+    }
+    .cover-image {
+      position: relative;
+      width: 100%;
+      height: 62%;
+      overflow: hidden;
+    }
+    .cover-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17,17,17,0) 30%, rgba(17,17,17,0.85) 100%);
+    }
+    .cover-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cover-content {
+      flex: 1;
+      padding: 0 22mm 22mm;
+      background: var(--viveloo-black);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+    .cover-brand {
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--sand);
+      margin-bottom: 6mm;
+      display: flex;
+      gap: 8px;
+    }
+    .cover-brand span.sep { opacity: 0.4; }
+    .cover-overline {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #E7D5B9;
+      margin-bottom: 8mm;
+    }
+    .cover-title {
+      font-size: 52px;
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      color: var(--sand);
+      margin-bottom: 6mm;
+    }
+    .cover-title .accent {
+      color: #E7D5B9;
+    }
+    .cover-subtitle {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(247, 243, 236, 0.75);
+      max-width: 500px;
+      font-weight: 300;
+      margin-bottom: 12mm;
+    }
+    .cover-edition {
+      position: absolute;
+      bottom: 8mm;
+      right: 22mm;
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(247, 243, 236, 0.55);
+    }
+
+    /* ── Content blocks ────────────────────────────────── */
+    .highlight-box {
+      border: 1px solid var(--divider);
+      padding: 18px 22px;
+      margin: 16px 0;
+      background: rgba(255, 255, 255, 0.4);
+    }
+    .highlight-box .label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--viveloo-brown);
+      margin-bottom: 6px;
+    }
+    .highlight-box p {
+      font-size: 11px;
+      line-height: 1.65;
+      color: var(--caramel);
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .stat {
+      flex: 1;
+      padding: 14px 16px;
+      border-top: 1px solid var(--viveloo-taupe);
+    }
+    .stat .value {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--viveloo-brown);
+      line-height: 1;
+    }
+    .stat .label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-top: 6px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--divider);
+      margin: 18px 0;
+    }
+    .card-item {
+      background: var(--sand);
+      padding: 18px 20px;
+    }
+    .card-item .num {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 24px;
+      color: var(--viveloo-taupe);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .card-item h3 {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--viveloo-black);
+      margin-bottom: 6px;
+    }
+    .card-item p {
+      font-size: 10.5px;
+      line-height: 1.6;
+      color: var(--caramel);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 12px;
+    }
+    .col h3 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--viveloo-brown);
+      margin-bottom: 12px;
+    }
+    .col ul {
+      list-style: none;
+      padding: 0;
+    }
+    .col li {
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--caramel);
+      margin-bottom: 6px;
+      padding-left: 14px;
+      position: relative;
+    }
+    .col li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--viveloo-taupe);
+      font-weight: 700;
+    }
+
+    .big-number {
+      text-align: center;
+      padding: 30px 0;
+    }
+    .big-number .value {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: 72px;
+      line-height: 1;
+      color: var(--viveloo-brown);
+    }
+    .big-number .label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-top: 10px;
+    }
+    .big-number .equiv {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--viveloo-black);
+    }
+    .big-number .equiv strong {
+      font-weight: 500;
+      color: var(--viveloo-brown);
+      font-size: 16px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 10.5px;
+      border-bottom: 1px solid var(--divider);
+    }
+    th {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--viveloo-taupe);
+      background: var(--sand-deep);
+    }
+    td.qualifies {
+      color: var(--viveloo-brown);
+      font-weight: 500;
+    }
+    td.no-qualify {
+      color: var(--caramel);
+      opacity: 0.6;
+    }
+
+    /* Timeline */
+    .timeline-item {
+      display: flex;
+      gap: 18px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-num {
+      flex-shrink: 0;
+      width: 40px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 24px;
+      color: var(--viveloo-taupe);
+    }
+    .timeline-content h4 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--viveloo-black);
+      margin-bottom: 4px;
+    }
+    .timeline-content p {
+      font-size: 10.5px;
+      line-height: 1.65;
+      color: var(--caramel);
+    }
+
+    /* FAQ */
+    .faq-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--viveloo-black);
+      margin-bottom: 6px;
+    }
+    .faq-a {
+      font-size: 10.5px;
+      line-height: 1.65;
+      color: var(--caramel);
+    }
+
+    /* Contact card */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--divider);
+      margin: 20px 0;
+    }
+    .contact-item {
+      background: var(--sand);
+      padding: 18px;
+      text-align: center;
+    }
+    .contact-item .label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--viveloo-taupe);
+      margin-bottom: 8px;
+    }
+    .contact-item .value {
+      font-size: 13px;
+      color: var(--viveloo-black);
+      font-weight: 500;
+    }
+
+    /* Partners footer */
+    .partners {
+      text-align: center;
+      margin-top: auto;
+      padding-top: 20px;
+    }
+    .partners span {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--viveloo-taupe);
+      margin: 0 10px;
+    }
+
+    /* Disclaimer box */
+    .disclaimer {
+      border: 1px solid var(--divider);
+      padding: 24px 28px;
+      background: rgba(255, 255, 255, 0.4);
+    }
+    .disclaimer p {
+      font-size: 10px;
+      line-height: 1.75;
+      color: var(--caramel);
+      margin-bottom: 10px;
+    }
+    .disclaimer p strong {
+      color: var(--viveloo-brown);
+      font-weight: 500;
+    }
+
+    @media print {
+      body { padding: 0; gap: 0; background: #fff; }
+      .page { box-shadow: none; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════ PÁGINA 1 · PORTADA ═══════════════ -->
+  <section class="page cover">
+    <div class="cover-image">
+      <img src="../public/renders/RENDER FINAL 18.jpg" alt="">
+    </div>
+    <div class="cover-content">
+      <div class="cover-brand">
+        <span>VIVELOO</span><span class="sep">·</span><span>PUNTAMAREA</span>
+      </div>
+      <div class="cover-overline">Guía del Inversionista Extranjero</div>
+      <h1 class="cover-title">
+        Vivir en Colombia,<br>
+        <span class="accent">legalmente.</span>
+      </h1>
+      <p class="cover-subtitle">
+        Cómo la compra de una residencia en PUNTAMAREA te abre la puerta a la residencia legal en Colombia.
+      </p>
+      <div class="cover-edition">Edición 2026</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 2 · BIENVENIDA ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">INTRODUCCIÓN</span></div>
+    <h2 class="title-xl">Una residencia. Una inversión.<br><span class="accent">una forma legal de vivir en Colombia.</span></h2>
+    <div class="divider"></div>
+
+    <p class="body-text">
+      Colombia es uno de los destinos preferidos por extranjeros que buscan una segunda residencia en el Caribe. Clima estable, costo de vida favorable, conectividad aérea con Norteamérica y Europa, y una calidad de vida en Cartagena que pocos destinos ofrecen.
+    </p>
+    <p class="body-text">
+      Si estás pensando en PUNTAMAREA como inversión, hay algo más que quizá no has considerado: adquirir una residencia en el proyecto puede darte acceso a la <strong>Visa M de Inversionista Inmobiliario</strong> que otorga el Estado colombiano. Con ella puedes vivir legalmente en el país, ingresar y salir sin restricciones, e incluso acumular tiempo hacia la residencia permanente.
+    </p>
+    <p class="body-text">
+      Esta guía te explica cómo funciona el proceso, qué requisitos pide la normativa vigente para 2026, y cómo conectamos a nuestros inversionistas con la firma migratoria aliada para tramitar la visa sin fricciones.
+    </p>
+
+    <div class="highlight-box" style="margin-top: 24px;">
+      <div class="label">Importante</div>
+      <p>
+        Esta guía es informativa y está basada en la normativa colombiana vigente a 2026 (Resolución 5477 de 2022). El trámite migratorio real debe realizarse con un asesor certificado que valide tu caso particular.
+      </p>
+    </div>
+
+    <div class="page-number">02 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 3 · PUNTAMAREA ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">EL PROYECTO</span></div>
+    <h2 class="title-xl">PUNTAMAREA, <span class="accent">tu residencia en barú.</span></h2>
+    <div class="divider"></div>
+
+    <p class="body-text">
+      PUNTAMAREA es un desarrollo residencial exclusivo en Barú, a 45 minutos de Cartagena por vía terrestre. 209 residencias de lujo con más de 150 metros de playa privada, frente al Caribe colombiano, con arquitectura contemporánea tropical y gestión por Ahead.
+    </p>
+    <p class="body-text">
+      El proyecto está siendo desarrollado por <strong>Viveloo Inmobiliaria</strong>, con diseño y construcción de Inspira y operación hotelera opcional por Ahead. Fase 1 está en lanzamiento, con los tickets más exclusivos y la mejor apreciación potencial del proyecto.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="value">209</div>
+        <div class="label">Residencias exclusivas</div>
+      </div>
+      <div class="stat">
+        <div class="value">150 m</div>
+        <div class="label">Playa privada</div>
+      </div>
+      <div class="stat">
+        <div class="value">29.9%</div>
+        <div class="label">ROI Año 1 proyectado</div>
+      </div>
+    </div>
+
+    <div style="margin-top: auto; width: 100%;">
+      <img src="../public/ubicacion-puntamarea.png" alt="Mapa de ubicación" style="width: 100%; height: auto; border: 1px solid var(--divider);">
+    </div>
+
+    <div class="page-number">03 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 4 · VISA M ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">VISA M · INVERSIONISTA INMOBILIARIO</span></div>
+    <h2 class="title-xl">Qué es y qué <span class="accent">te permite hacer.</span></h2>
+    <div class="divider"></div>
+
+    <p class="body-text">
+      La Visa M Inversionista Inmobiliario es un permiso migratorio que el Estado colombiano otorga a extranjeros que adquieren propiedad raíz en el país a nombre propio. Forma parte de la categoría M (Migrante) de visas, y te acredita como residente migratorio mientras seas propietario del inmueble.
+    </p>
+
+    <div class="card-grid">
+      <div class="card-item">
+        <span class="num">01</span>
+        <h3>Permanencia legal</h3>
+        <p>Puedes vivir en Colombia mientras seas propietario de tu residencia. La visa se otorga por hasta tres años, renovable.</p>
+      </div>
+      <div class="card-item">
+        <span class="num">02</span>
+        <h3>Entrada y salida libre</h3>
+        <p>Ingresa y sal del país las veces que quieras sin trámites adicionales. No hay límite de días de permanencia.</p>
+      </div>
+      <div class="card-item">
+        <span class="num">03</span>
+        <h3>Cónyuge e hijos</h3>
+        <p>Tu cónyuge y tus hijos menores de 25 años dependientes pueden aplicar como beneficiarios en la misma visa.</p>
+      </div>
+      <div class="card-item">
+        <span class="num">04</span>
+        <h3>Cédula de Extranjería</h3>
+        <p>Con la visa aprobada puedes tramitar tu Cédula de Extranjería, abrir cuentas bancarias y acceder al sistema de salud local.</p>
+      </div>
+    </div>
+
+    <div class="page-number">04 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 5 · ELEGIBILIDAD ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">ELEGIBILIDAD</span></div>
+    <h2 class="title-xl">¿Para quién <span class="accent">aplica esta visa?</span></h2>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div class="col">
+        <h3>Sí aplica</h3>
+        <ul>
+          <li>Ciudadanos de cualquier país, sin restricción de nacionalidad.</li>
+          <li>Personas que adquieran un inmueble a nombre propio en Colombia.</li>
+          <li>Cónyuges e hijos menores de 25 años dependientes del titular.</li>
+          <li>Extranjeros que ya residen en Colombia con otra visa y quieran cambiar a la categoría M Inversionista.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Consideraciones</h3>
+        <ul>
+          <li>La propiedad debe estar a nombre propio del solicitante, no a nombre de una sociedad.</li>
+          <li>La inversión debe estar registrada como Inversión Extranjera Directa ante el Banco de la República (Formulario 4).</li>
+          <li>Se requiere mantener la titularidad del inmueble durante toda la vigencia de la visa.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page-number">05 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 6 · MONTO MÍNIMO ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">MONTO MÍNIMO VIGENTE</span></div>
+    <h2 class="title-xl">La cifra <span class="accent">que necesitas conocer.</span></h2>
+    <div class="divider"></div>
+
+    <p class="body-text">
+      La Resolución 5477 de 2022 establece que el valor mínimo de inversión inmobiliaria para acceder a la Visa M Inversionista Inmobiliario equivale a <strong>350 salarios mínimos mensuales legales vigentes (SMMLV)</strong> a la fecha de solicitud.
+    </p>
+
+    <div class="big-number" style="margin-top: 30px; padding: 40px 20px; border: 1px solid var(--divider); background: rgba(255,255,255,0.4);">
+      <div class="label">Monto mínimo exigido</div>
+      <div class="value">350 SMMLV</div>
+      <div class="equiv">
+        Equivalente en 2026: <br>
+        <strong>COP $612.816.750</strong> · <strong>≈ USD $161.300</strong>
+      </div>
+      <div style="font-size: 10px; color: var(--caramel); margin-top: 20px; font-style: italic;">
+        Tasa de referencia: 1 SMMLV 2026 = COP $1.750.905
+      </div>
+    </div>
+
+    <p class="body-text" style="margin-top: 30px; font-size: 10.5px; font-style: italic;">
+      El valor se actualiza cada año con el salario mínimo colombiano. Para verificar la cifra vigente al momento de tu solicitud, consulta con tu asesor migratorio o en el portal de la Cancillería de Colombia.
+    </p>
+
+    <div class="page-number">06 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 7 · PUNTAMAREA CALIFICA ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">TU INVERSIÓN EN PUNTAMAREA</span></div>
+    <h2 class="title-xl">Tickets que cumplen <span class="accent">el umbral migratorio.</span></h2>
+    <div class="divider"></div>
+
+    <p class="body-text">
+      No todas las unidades de PUNTAMAREA califican por sí solas para la Visa M. El monto mínimo exigido en 2026 (aproximadamente USD $161.000) marca la línea. Los tickets de entrada premium del proyecto cumplen el umbral con holgura.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Ticket</th>
+          <th>Valor aproximado</th>
+          <th>Visa M Inmobiliaria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>$280M COP</td><td>~USD $74.000</td><td class="no-qualify">No califica por sí solo</td></tr>
+        <tr><td>$350M COP</td><td>~USD $92.000</td><td class="no-qualify">No califica por sí solo</td></tr>
+        <tr><td>$450M COP</td><td>~USD $118.000</td><td class="no-qualify">No califica por sí solo</td></tr>
+        <tr><td>$600M COP</td><td>~USD $158.000</td><td class="no-qualify">Al límite, requiere validación</td></tr>
+        <tr><td><strong>$800M COP+</strong></td><td><strong>~USD $211.000+</strong></td><td class="qualifies">Califica con holgura</td></tr>
+        <tr><td><strong>$1.200M COP</strong></td><td><strong>~USD $316.000</strong></td><td class="qualifies">Califica con holgura</td></tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box" style="margin-top: 20px;">
+      <div class="label">¿Y si tu ticket preferido no llega al umbral?</div>
+      <p style="margin-bottom: 8px;"><strong>Consolidar varias unidades.</strong> Si adquieres dos o más residencias a tu nombre, la suma de los valores cuenta como inversión única.</p>
+      <p><strong>Combinar con otra inversión extranjera directa.</strong> Si ya tienes otra propiedad o inversión registrada en Colombia, puede sumar al monto requerido.</p>
+    </div>
+
+    <div class="page-number">07 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 8 · PROCESO ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">EL PROCESO</span></div>
+    <h2 class="title-xl">De la compra <span class="accent">a la visa en tu mano.</span></h2>
+    <div class="divider"></div>
+
+    <div class="timeline-item">
+      <div class="timeline-num">01</div>
+      <div class="timeline-content">
+        <h4>Acuerdo de compra</h4>
+        <p>Firmas la promesa de compraventa de tu residencia en PUNTAMAREA con acompañamiento de Viveloo y revisión legal.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">02</div>
+      <div class="timeline-content">
+        <h4>Registro ante Banco de la República</h4>
+        <p>El giro de fondos desde el exterior se registra como Inversión Extranjera Directa mediante el Formulario 4. Este registro es indispensable para la visa.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">03</div>
+      <div class="timeline-content">
+        <h4>Escritura y Certificado de Tradición</h4>
+        <p>Firmada la escritura pública ante notaría, el inmueble queda a tu nombre. Se solicita el Certificado de Tradición y Libertad en la Oficina de Registro.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">04</div>
+      <div class="timeline-content">
+        <h4>Preparación del expediente migratorio</h4>
+        <p>Nuestra firma aliada recopila y apostilla los documentos requeridos: pasaporte, antecedentes, certificados, extractos bancarios.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">05</div>
+      <div class="timeline-content">
+        <h4>Aplicación ante la Cancillería</h4>
+        <p>La solicitud se presenta online a través del portal oficial de visas del Ministerio de Relaciones Exteriores.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">06</div>
+      <div class="timeline-content">
+        <h4>Emisión y registro</h4>
+        <p>Una vez aprobada (15 a 30 días hábiles), recibes la visa estampada en tu pasaporte. Registro ante Migración Colombia dentro de los 15 días siguientes.</p>
+      </div>
+    </div>
+
+    <div class="page-number">08 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 9 · DOCUMENTOS ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">REQUISITOS</span></div>
+    <h2 class="title-xl">Documentos y <span class="accent">tiempos estimados.</span></h2>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div class="col">
+        <h3>Documentos</h3>
+        <p style="font-size: 10px; font-weight: 500; color: var(--viveloo-black); margin-top: 10px; margin-bottom: 6px;">Personales</p>
+        <ul>
+          <li>Pasaporte vigente, mínimo 6 meses</li>
+          <li>Foto 3x4 fondo blanco</li>
+          <li>Antecedentes judiciales apostillados</li>
+          <li>Certificado médico (algunos casos)</li>
+        </ul>
+        <p style="font-size: 10px; font-weight: 500; color: var(--viveloo-black); margin-top: 12px; margin-bottom: 6px;">Financieros</p>
+        <ul>
+          <li>Extractos bancarios últimos 3 meses</li>
+          <li>Formulario 4 Banco de la República</li>
+          <li>Constancia de transferencia internacional</li>
+        </ul>
+        <p style="font-size: 10px; font-weight: 500; color: var(--viveloo-black); margin-top: 12px; margin-bottom: 6px;">Del inmueble</p>
+        <ul>
+          <li>Certificado de Tradición y Libertad</li>
+          <li>Escritura pública de compraventa</li>
+          <li>Avalúo comercial (cuando aplique)</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Tiempos estimados</h3>
+        <table style="margin-top: 10px;">
+          <tbody>
+            <tr><td style="padding: 8px 0; border-bottom: 1px solid var(--divider);">Compra + escritura</td><td style="text-align: right;">30 a 60 días</td></tr>
+            <tr><td style="padding: 8px 0; border-bottom: 1px solid var(--divider);">Registro Banco República</td><td style="text-align: right;">5 a 10 días</td></tr>
+            <tr><td style="padding: 8px 0; border-bottom: 1px solid var(--divider);">Expediente migratorio</td><td style="text-align: right;">15 a 30 días</td></tr>
+            <tr><td style="padding: 8px 0; border-bottom: 1px solid var(--divider);">Emisión de visa</td><td style="text-align: right;">15 a 30 días hábiles</td></tr>
+            <tr><td style="padding: 12px 0; font-weight: 500; color: var(--viveloo-brown);">Total estimado</td><td style="text-align: right; font-weight: 500; color: var(--viveloo-brown);">3 a 5 meses</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top: 24px;">Costos oficiales (2026)</h3>
+        <ul>
+          <li>Estudio de visa: USD $52</li>
+          <li>Expedición de visa: USD $282</li>
+          <li>Cédula de Extranjería: COP $236.300</li>
+          <li>Honorarios de firma migratoria: variable</li>
+        </ul>
+        <p style="font-size: 9px; color: var(--caramel); font-style: italic; margin-top: 10px;">
+          Los costos oficiales se actualizan cada año. Consulta cifras vigentes con tu asesor.
+        </p>
+      </div>
+    </div>
+
+    <div class="page-number">09 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 10 · VISA R ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">A LARGO PLAZO</span></div>
+    <h2 class="title-xl">De la Visa M <span class="accent">a la residencia permanente.</span></h2>
+    <div class="divider"></div>
+
+    <p class="body-text">
+      Tras cinco años continuos como titular de la Visa M Inversionista Inmobiliario (sin interrupciones mayores a la mitad del tiempo de vigencia de cada visa), puedes solicitar la <strong>Visa R de Residente Permanente</strong>.
+    </p>
+
+    <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 22px;">
+      <div class="card-item">
+        <h3 style="margin-top: 8px;">Permanencia indefinida</h3>
+        <p>No requiere renovación cada 3 años. Se otorga por tiempo indefinido, condicionada solo a renovar la cédula de extranjería.</p>
+      </div>
+      <div class="card-item">
+        <h3 style="margin-top: 8px;">Derecho a trabajar y estudiar</h3>
+        <p>Sin restricciones laborales ni académicas. Acceso pleno al sistema educativo y profesional colombiano.</p>
+      </div>
+      <div class="card-item">
+        <h3 style="margin-top: 8px;">Ruta a la ciudadanía</h3>
+        <p>Después de 5 años adicionales como Residente (o 2 si casado con ciudadano colombiano), puedes aplicar a la nacionalización.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 30px;">
+      <div class="label">Línea de tiempo</div>
+      <p style="margin-bottom: 4px;"><strong>Año 0:</strong> Compras residencia en PUNTAMAREA</p>
+      <p style="margin-bottom: 4px;"><strong>Año 0 a 5:</strong> Visa M Inversionista Inmobiliario (renovable)</p>
+      <p style="margin-bottom: 4px;"><strong>Año 5:</strong> Aplicas a Visa R Residente</p>
+      <p style="margin-bottom: 4px;"><strong>Año 5 a 10:</strong> Residencia permanente</p>
+      <p><strong>Año 10+:</strong> Posibilidad de ciudadanía por adopción</p>
+    </div>
+
+    <div class="page-number">10 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 11 · VIVIR EN COLOMBIA ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">ESTILO DE VIDA</span></div>
+    <h2 class="title-xl">Por qué Colombia, <span class="accent">por qué barú.</span></h2>
+    <div class="divider"></div>
+
+    <div class="timeline-item">
+      <div class="timeline-num">01</div>
+      <div class="timeline-content">
+        <h4>Clima constante todo el año</h4>
+        <p>Temperatura promedio entre 27 y 30°C. Sin estaciones marcadas. Brisas caribeñas y días soleados casi todo el año.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">02</div>
+      <div class="timeline-content">
+        <h4>Conectividad privilegiada</h4>
+        <p>Aeropuerto Rafael Núñez (Cartagena) a 45 minutos de PUNTAMAREA por tierra, o 15 minutos por mar. Vuelos directos a Miami, Nueva York, Ciudad de México, Madrid y múltiples ciudades de Latam.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">03</div>
+      <div class="timeline-content">
+        <h4>Costo de vida favorable</h4>
+        <p>El costo de vida premium en Cartagena es 30 a 40% menor que el equivalente en Miami o Madrid. Salud privada, gastronomía y servicios personales son accesibles.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">04</div>
+      <div class="timeline-content">
+        <h4>Comunidad expatriada consolidada</h4>
+        <p>Cartagena y Barú concentran una comunidad creciente de expatriados europeos, estadounidenses y latinoamericanos. Red social establecida de nómadas digitales e inversionistas.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">05</div>
+      <div class="timeline-content">
+        <h4>Tratamiento tributario favorable</h4>
+        <p>Los ingresos del exterior no se tributan en Colombia si no superas 183 días de residencia fiscal al año. Existen convenios de doble tributación con múltiples países. Validar con asesor tributario según país de origen.</p>
+      </div>
+    </div>
+
+    <div class="page-number">11 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 12 · FAQ ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">PREGUNTAS FRECUENTES</span></div>
+    <h2 class="title-xl">Lo que más <span class="accent">preguntan nuestros clientes.</span></h2>
+    <div class="divider"></div>
+
+    <div class="faq-item">
+      <div class="faq-q">¿Necesito saber español para obtener la visa?</div>
+      <div class="faq-a">No. La visa M Inversionista Inmobiliario no exige examen de idioma. El trámite puede hacerse en inglés con apoyo de tu firma migratoria.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Puedo comprar la propiedad a nombre de una empresa?</div>
+      <div class="faq-a">Para efectos de la Visa M, el inmueble debe estar a nombre propio del solicitante. Una estructura corporativa descalifica la aplicación.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Mi familia puede vivir conmigo en Colombia?</div>
+      <div class="faq-a">Sí. Tu cónyuge y tus hijos menores de 25 años dependientes pueden aplicar como beneficiarios en la misma visa.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Pierdo la visa si vendo la propiedad?</div>
+      <div class="faq-a">Sí. La visa está condicionada a mantener la titularidad del inmueble. Si vendes antes de la renovación, la visa se cancela.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Cuánto tiempo debo permanecer en Colombia cada año?</div>
+      <div class="faq-a">Para mantener la visa vigente, puedes entrar y salir libremente sin mínimo de días. Para acumular tiempo hacia la Visa R, debes estar en Colombia al menos la mitad del tiempo de vigencia de cada visa.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Puedo trabajar en Colombia con esta visa?</div>
+      <div class="faq-a">La Visa M Inversionista no es una visa de trabajo. Puedes recibir ingresos de tu inversión (rentas, valorización) pero no puedes tener empleo formal. Existen otras categorías para eso.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Cómo se tributa la renta de mi propiedad en Colombia?</div>
+      <div class="faq-a">Las rentas generadas por tu inmueble se tributan como renta colombiana. Si operas con Ahead bajo gestión hotelera, ellos facturan y declaran; tú recibes las ganancias netas.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿La visa M afecta mi residencia fiscal en mi país de origen?</div>
+      <div class="faq-a">Depende de tu país. Colombia considera residente fiscal a quien permanece más de 183 días. Si quedas como doble residente fiscal, se activan los tratados de doble tributación. Consulta con tu asesor tributario internacional.</div>
+    </div>
+
+    <div class="page-number">12 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 13 · CONTACTO ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">AGENDA TU ASESORÍA</span></div>
+    <h2 class="title-xl">Da el siguiente paso <span class="accent">con acompañamiento real.</span></h2>
+    <div class="divider"></div>
+
+    <p class="body-text">
+      Si esta guía resolvió tus dudas generales, el siguiente paso es una conversación de 30 minutos con nuestro equipo. Revisamos tu perfil específico, confirmamos cuál ticket de PUNTAMAREA encaja con tus objetivos migratorios, y te conectamos sin costo adicional con nuestra firma migratoria aliada.
+    </p>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="label">WhatsApp</div>
+        <div class="value">+57 310 812 5075</div>
+      </div>
+      <div class="contact-item">
+        <div class="label">Email</div>
+        <div class="value">inversionistas@<br>puntamarea.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="label">Web</div>
+        <div class="value">puntamarea.<br>viveloo.co</div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 30px;">
+      <div class="label">Lo que recibes en la asesoría</div>
+      <p style="margin-bottom: 4px;">· Validación de tu perfil migratorio según normativa vigente.</p>
+      <p style="margin-bottom: 4px;">· Proyección financiera de tu inversión en PUNTAMAREA.</p>
+      <p style="margin-bottom: 4px;">· Conexión con firma migratoria aliada, sin costo adicional.</p>
+      <p>· Ruta personalizada de compra, escritura, registro y solicitud de visa.</p>
+    </div>
+
+    <div class="partners">
+      <span>VIVELOO</span><span>INSPIRA</span><span>AHEAD</span>
+    </div>
+
+    <div class="page-number">13 / 14</div>
+  </section>
+
+  <!-- ═══════════════ PÁGINA 14 · DISCLAIMER ═══════════════ -->
+  <section class="page">
+    <div class="overline"><span class="overline-divider">AVISO LEGAL</span></div>
+    <h2 class="title-lg" style="margin-top: 20px;">Sobre esta <span class="accent">guía.</span></h2>
+    <div class="divider"></div>
+
+    <div class="disclaimer">
+      <p>
+        Esta guía es un documento informativo elaborado por Viveloo Inmobiliaria con propósitos orientativos para potenciales inversionistas extranjeros en PUNTAMAREA. La información aquí contenida está basada en la normativa migratoria colombiana vigente a la fecha de publicación (<strong>Resolución 5477 de 2022</strong> del Ministerio de Relaciones Exteriores), y en datos de salario mínimo vigente para 2026.
+      </p>
+      <p>
+        La normativa migratoria puede cambiar. Los montos mínimos de inversión se actualizan anualmente con el salario mínimo colombiano. Los plazos y costos oficiales referidos son estimados y sujetos a modificación por parte de las autoridades competentes.
+      </p>
+      <p>
+        Esta guía <strong>no constituye asesoría legal, migratoria ni tributaria</strong>. El trámite de visa debe realizarse con un asesor migratorio certificado ante el Ministerio de Relaciones Exteriores de Colombia. Viveloo Inmobiliaria y PUNTAMAREA no garantizan la aprobación de ninguna solicitud de visa, cuya decisión es facultad exclusiva de la Cancillería.
+      </p>
+      <p style="margin-top: 16px;">
+        Para consultar la normativa oficial, visita:<br>
+        <strong>cancilleria.gov.co/tramites_servicios/visas</strong>
+      </p>
+    </div>
+
+    <div style="margin-top: auto; text-align: center; padding-top: 40px;">
+      <div style="font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--viveloo-brown); margin-bottom: 6px;">
+        VIVELOO · PUNTAMAREA
+      </div>
+      <div style="font-size: 9px; color: var(--caramel); letter-spacing: 0.1em;">
+        © 2026 Viveloo Inmobiliaria. Todos los derechos reservados.<br>
+        Barú Residences · Cartagena, Colombia
+      </div>
+    </div>
+
+    <div class="page-number">14 / 14</div>
+  </section>
+
+</body>
+</html>

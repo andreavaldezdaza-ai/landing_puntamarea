@@ -20,21 +20,56 @@ const montserrat = Montserrat({
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5W347F4H"
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "2036629853904012"
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://landing-puntamarea.vercel.app"
+
+const TITLE = "PUNTAMAREA | Residencias de Lujo en Barú, Cartagena"
+const DESCRIPTION = "209 residencias de lujo con más de 150 metros de playa privada en Barú, Colombia. ROI proyectado 29.9% en Año 1. Inversión exclusiva Viveloo. Fase 1 en lanzamiento."
+const SHORT_DESCRIPTION = "209 residencias de lujo frente al mar en Barú. ROI proyectado 29.9% Año 1. Inversión exclusiva Viveloo."
+
 export const metadata: Metadata = {
-  title: 'PUNTAMAREA | Residencias de Lujo en Barú, Cartagena',
-  description: '209 residencias de lujo con más de 150 metros de playa privada en Barú, Colombia. ROI proyectado 29.9% en Año 1. Inversión exclusiva Viveloo — Fase 1 en lanzamiento.',
-  keywords: ['residencias de lujo Barú', 'inversión inmobiliaria Cartagena', 'Puntamarea', 'Viveloo', 'playa privada Colombia', 'ROI inmobiliario'],
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  keywords: [
+    'residencias de lujo Barú',
+    'inversión inmobiliaria Cartagena',
+    'Puntamarea',
+    'Viveloo',
+    'playa privada Colombia',
+    'ROI inmobiliario',
+    'visa inversionista Colombia',
+    'segunda vivienda Barú',
+  ],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'PUNTAMAREA | Residencias de Lujo en Barú, Cartagena',
-    description: '209 residencias de lujo con más de 150 metros de playa privada en Barú. ROI proyectado 29.9%.',
+    title: TITLE,
+    description: SHORT_DESCRIPTION,
+    url: SITE_URL,
     type: 'website',
     locale: 'es_CO',
     siteName: 'PUNTAMAREA',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: SHORT_DESCRIPTION,
+  },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
+  authors: [{ name: 'Viveloo Inmobiliaria' }],
+  creator: 'Viveloo Inmobiliaria',
+  publisher: 'Viveloo Inmobiliaria',
+  category: 'real estate',
 }
 
 export const viewport: Viewport = {
@@ -43,22 +78,66 @@ export const viewport: Viewport = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "RealEstateListing",
-  "name": "PUNTAMAREA — Residencias de Lujo en Barú",
-  "description": "209 residencias de lujo frente al Caribe en Barú, Colombia. Playa privada de 150m. Operación hotelera por Ahead.",
-  "url": "https://puntamarea.com",
-  "numberOfRooms": "209",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Barú",
-    "addressRegion": "Bolívar",
-    "addressCountry": "CO"
-  },
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": "COP",
-    "availability": "https://schema.org/LimitedAvailability"
-  }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#viveloo`,
+      "name": "Viveloo Inmobiliaria",
+      "url": "https://viveloo.co",
+      "logo": `${SITE_URL}/logo-viveloo.png`,
+      "sameAs": ["https://viveloo.co"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      "url": SITE_URL,
+      "name": "PUNTAMAREA",
+      "description": "Residencias de Lujo en Barú, Cartagena",
+      "inLanguage": "es-CO",
+      "publisher": { "@id": `${SITE_URL}/#viveloo` },
+    },
+    {
+      "@type": ["RealEstateListing", "Residence"],
+      "@id": `${SITE_URL}/#puntamarea`,
+      "name": "PUNTAMAREA — Barú Residences",
+      "description": "209 residencias de lujo frente al Caribe colombiano. Playa privada de 150 metros, amenidades de clase mundial y gestión por Ahead. Desarrollo exclusivo de Viveloo en Barú, a 45 minutos de Cartagena.",
+      "url": SITE_URL,
+      "numberOfRooms": 209,
+      "image": [
+        `${SITE_URL}/og-render-21.jpg`,
+        `${SITE_URL}/renders/RENDER FINAL 2.png`,
+        `${SITE_URL}/renders/RENDER FINAL 18.jpg`,
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Barú",
+        "addressRegion": "Bolívar",
+        "addressCountry": "CO",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 10.1167,
+        "longitude": -75.6833,
+      },
+      "developer": { "@id": `${SITE_URL}/#viveloo` },
+      "brand": { "@id": `${SITE_URL}/#viveloo` },
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "Playa privada de 150 metros" },
+        { "@type": "LocationFeatureSpecification", "name": "Beach Club frente al mar" },
+        { "@type": "LocationFeatureSpecification", "name": "Piscinas y amenidades" },
+        { "@type": "LocationFeatureSpecification", "name": "Gestión hotelera por Ahead" },
+      ],
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "COP",
+        "lowPrice": "280000000",
+        "highPrice": "1200000000",
+        "offerCount": 209,
+        "availability": "https://schema.org/LimitedAvailability",
+        "seller": { "@id": `${SITE_URL}/#viveloo` },
+      },
+    },
+  ],
 }
 
 export default function RootLayout({

@@ -6,8 +6,21 @@
 - **Animaciones:** Framer Motion 12 (`motion`, `useInView`, `useScroll`, `useTransform`)
 - **Deploy:** Vercel (auto-deploy desde GitHub `main`)
 - **Repo:** https://github.com/andreavaldezdaza-ai/landing_puntamarea (privado)
-- **Producción:** https://landing-puntamarea.vercel.app/
-- **Dominio final (pendiente DNS):** `puntamarea.viveloo.co` (ns1.webbuho.com / ns2.webbuho.com). CNAME requerido: `puntamarea → 2524bebc133b611b.vercel-dns-017.com` (TTL 300). Cuando propague, actualizar `NEXT_PUBLIC_SITE_URL` en Vercel Env Vars.
+- **Producción:** https://puntamarea.viveloo.co/ (dominio oficial, LIVE con SSL)
+- **Alias Vercel:** https://landing-puntamarea.vercel.app/ (sigue funcionando)
+
+## 🌐 Stack de infraestructura de dominio (live)
+- **Registrar:** SiteGround (propietario Viveloo Inmobiliaria, expira mar 2027).
+- **DNS:** Cloudflare (Free plan, cuenta `gerencia@viveloinmobiliaria.com`) bajo control directo del cliente.
+- **Nameservers activos:** `ashton.ns.cloudflare.com`, `brenda.ns.cloudflare.com`.
+- **Hosting landing:** Vercel Hobby (proyecto `landing-puntamarea`).
+- **Registro DNS:** `puntamarea CNAME 2524bebc133b611b.vercel-dns-017.com` · DNS only (sin proxy Cloudflare, Vercel gestiona SSL/CDN).
+- **`NEXT_PUBLIC_SITE_URL`** = `https://puntamarea.viveloo.co` (configurada a nivel Team/Shared en Vercel, aplica a Production + Preview).
+
+**Arquitectura SEO decidida:**
+- `viveloo.co` → futuro sitio corporativo (pendiente fase 2, sigue con Google Cloud/Webbuho de ToGrow).
+- `puntamarea.viveloo.co` → landing del proyecto (esta app, producción).
+- Cuando se reemplace `viveloo.co` coordinar 301 redirects desde URLs viejas de PM hacia este subdominio.
 
 ## Git Push
 Para push usar token de GitHub (Personal Access Token) guardado en keychain/local. No incluir tokens en archivos trackeados.
@@ -112,7 +125,7 @@ Esta regla va FUERA de `@layer base` (Tailwind v4 puede ignorar `@media` dentro 
   - WhatsApp button apunta al número correcto (+573108125075)
 - [ ] **QA desktop** — Chrome, Safari, Firefox. Verificar todas las animaciones (location parallax, counters, clip-path reveal).
 - [x] ~~Página /gracias~~ ✅ Rediseñada con hero + 3 botones de material exclusivo que abren modales (ROI + Visa Guide + Brochure descarga).
-- [ ] **Propagación DNS `puntamarea.viveloo.co`** — pendiente ToGrow (agencia previa) para crear CNAME en Webbuho. Una vez propague: actualizar `NEXT_PUBLIC_SITE_URL` en Vercel → Settings → Env Vars.
+- [x] ~~Propagación DNS `puntamarea.viveloo.co`~~ ✅ LIVE. DNS migrado a Cloudflare bajo control del cliente. `NEXT_PUBLIC_SITE_URL` configurada en Vercel (Team/Shared) para Production + Preview.
 - [ ] **PDF Guía Visa final** — actualmente placeholder en `/public/guia-visa-puntamarea.pdf`. Hay contenido listo en `docs/guia-visa-content.md` y `docs/guia-visa.html` (9 páginas). Pendiente: diseño final en Canva y reemplazo del PDF en `/public`.
 
 ### Prioridad MEDIA — Mejoras importantes

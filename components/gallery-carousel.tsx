@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect, useRef } from "react"
+import Image from "next/image"
 
 const galleryImages = [
   { id: 1,  src: "/carrusel/RENDER FINAL 1.png",  caption: "Vista exterior — frente al Caribe" },
@@ -105,25 +106,32 @@ export function GalleryCarousel() {
             aria-label="Imagen anterior"
             className="hidden md:block relative w-[26%] aspect-[4/3] overflow-hidden rounded-[6px] opacity-65 hover:opacity-95 transition-all duration-700 cursor-pointer"
           >
-            <img
+            <Image
               src={galleryImages[leftIndex].src}
               alt={galleryImages[leftIndex].caption}
-              className="h-full w-full object-cover"
-              draggable="false"
+              fill
+              sizes="(max-width: 768px) 0vw, 26vw"
+              quality={75}
+              className="object-cover"
+              draggable={false}
             />
           </button>
 
           {/* ── Imagen central — protagonista ── */}
           <div className="relative w-full md:w-[40%] aspect-[4/3] overflow-hidden rounded-[8px] shadow-xl shadow-viveloo-brown/15">
             {galleryImages.map((img, i) => (
-              <img
+              <Image
                 key={img.id}
                 src={img.src}
                 alt={img.caption}
-                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+                fill
+                sizes="(max-width: 768px) 100vw, 40vw"
+                quality={80}
+                loading={i === 0 ? "eager" : "lazy"}
+                className={`object-cover transition-opacity duration-700 ${
                   i === current ? "opacity-100" : "opacity-0"
                 }`}
-                draggable="false"
+                draggable={false}
               />
             ))}
             {/* Subtle bottom gradient */}
@@ -136,11 +144,14 @@ export function GalleryCarousel() {
             aria-label="Siguiente imagen"
             className="hidden md:block relative w-[26%] aspect-[4/3] overflow-hidden rounded-[6px] opacity-65 hover:opacity-95 transition-all duration-700 cursor-pointer"
           >
-            <img
+            <Image
               src={galleryImages[rightIndex].src}
               alt={galleryImages[rightIndex].caption}
-              className="h-full w-full object-cover"
-              draggable="false"
+              fill
+              sizes="(max-width: 768px) 0vw, 26vw"
+              quality={75}
+              className="object-cover"
+              draggable={false}
             />
           </button>
         </div>

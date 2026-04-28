@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { useInView } from "@/hooks/use-in-view"
 
 declare global {
@@ -108,10 +109,13 @@ export function ContactSection() {
             }`}
           >
             <div className="relative w-full overflow-hidden">
-              <img
+              <Image
                 src="/renders/RENDER FINAL 4.png"
                 alt="Residencias Puntamarea — Vista al mar"
-                className="absolute inset-0 h-full w-full object-cover"
+                fill
+                sizes="(max-width: 1024px) 0vw, 50vw"
+                quality={75}
+                className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent to-sand-deep/30" />
             </div>

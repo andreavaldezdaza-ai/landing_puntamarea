@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 import { useInView } from "@/hooks/use-in-view"
 
 const residences = [
@@ -138,11 +139,15 @@ function Carousel({ images, alt }: { images: string[]; alt: string }) {
     >
       <div className="relative aspect-[4/5] w-full">
         {images.map((src, i) => (
-          <img
+          <Image
             key={src}
             src={src}
             alt={`${alt} — ${i + 1}`}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            quality={75}
+            loading={i === 0 ? "eager" : "lazy"}
+            className={`object-cover transition-opacity duration-700 ${
               i === index ? "opacity-100" : "opacity-0"
             }`}
           />

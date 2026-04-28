@@ -6,15 +6,17 @@ import './globals.css'
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500"],
   style: ["normal", "italic"],
-  variable: "--font-serif"
+  variable: "--font-serif",
+  display: "swap",
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
-  variable: "--font-sans"
+  weight: ["300", "500", "600"],
+  variable: "--font-sans",
+  display: "swap",
 });
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5W347F4H"

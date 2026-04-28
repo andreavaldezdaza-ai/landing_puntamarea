@@ -169,12 +169,22 @@ const MOBILE_SLIDES = [
 export function HeroSection() {
   const [visible, setVisible] = useState(false)
   const [slideIndex, setSlideIndex] = useState(0)
+  const [isDesktop, setIsDesktop] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const touchStartX = useRef<number | null>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 150)
     return () => clearTimeout(timer)
+  }, [])
+
+  // Detect desktop to render video conditionally (evita 11MB en mobile)
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)")
+    setIsDesktop(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
+    mq.addEventListener("change", handler)
+    return () => mq.removeEventListener("change", handler)
   }, [])
 
   // Auto-advance slides every 4s — solo en desktop (mobile usa imagen fija)
@@ -209,19 +219,21 @@ export function HeroSection() {
         </div>
 
 
-        {/* ── Video de fondo — desktop ── */}
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          className="absolute inset-0 hidden h-full w-full object-cover md:block"
-          poster="/renders/RENDER FINAL 9.jpg"
-        >
-          <source src="/hero-video.mp4" type="video/mp4" />
-        </video>
+        {/* ── Video de fondo — solo desktop, no se renderiza en mobile (evita 11MB de descarga) ── */}
+        {isDesktop && (
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 h-full w-full object-cover"
+            poster="/renders/RENDER FINAL 9.jpg"
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+        )}
 
         {/* ── Overlays cálidos — móvil: gradiente completo para legibilidad ── */}
         <div className="absolute inset-0 md:hidden bg-gradient-to-b from-stone-900/60 via-stone-900/55 to-stone-900/70" />

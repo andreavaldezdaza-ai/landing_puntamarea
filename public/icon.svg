@@ -1,4 +1,14 @@
-<svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
   <rect width="180" height="180" rx="32" fill="#66523c"/>
-  <text x="90" y="128" font-family="Georgia, 'Playfair Display', serif" font-style="italic" font-weight="500" font-size="138" fill="#F7F3EC" text-anchor="middle" letter-spacing="-2">P</text>
+  <g fill="#F7F3EC">
+    <circle cx="90" cy="90" r="14"/>
+    <path d="M90 30 L98 78 L82 78 Z"/>
+    <path d="M150 90 L102 98 L102 82 Z"/>
+    <path d="M90 150 L82 102 L98 102 Z"/>
+    <path d="M30 90 L78 82 L78 98 Z"/>
+    <path d="M133 47 L102 84 L96 78 Z"/>
+    <path d="M133 133 L96 102 L102 96 Z"/>
+    <path d="M47 133 L78 96 L84 102 Z"/>
+    <path d="M47 47 L84 78 L78 84 Z"/>
+  </g>
 </svg>

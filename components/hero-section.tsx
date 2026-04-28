@@ -330,7 +330,7 @@ export function HeroSection() {
         </div>
 
         {/* ── Stats bar inferior ── */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 bg-sand-deep/88 backdrop-blur-md border-t border-viveloo-taupe/15">
+        <div className="absolute bottom-0 left-0 right-0 z-10 bg-sand-deep border-t border-viveloo-taupe/15">
           <div className="mx-auto max-w-7xl">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-viveloo-taupe/20">
               <StatItem value="Desde $280M" label="Lotes en Etapa 1" />

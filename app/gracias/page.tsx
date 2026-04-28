@@ -177,9 +177,10 @@ function GraciasContent() {
         {/* Volver */}
         <Link
           href="/"
-          className="mt-6 font-sans text-xs font-light tracking-[0.15em] text-white/30 uppercase transition-colors hover:text-white/55"
+          className="group mt-6 inline-flex items-center gap-2 border border-white/30 px-6 py-3 font-sans text-xs font-medium tracking-[0.2em] text-white/85 uppercase transition-all hover:border-white hover:bg-white/10 hover:text-white"
         >
-          ← Volver al inicio
+          <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
+          Volver al inicio
         </Link>
         <p className="mt-3 font-sans text-[9px] font-light tracking-wide text-white/20">
           PUNTAMAREA · Un desarrollo de Viveloo · Barú, Colombia

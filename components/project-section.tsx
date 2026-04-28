@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 
 const pillars = [
@@ -93,9 +94,13 @@ export function ProjectSection() {
         className="mx-auto mb-16 max-w-3xl px-6 lg:mb-20"
       >
         <div className="overflow-hidden border border-viveloo-taupe/25 bg-sand">
-          <img
+          <Image
             src="/ubicacion-puntamarea.png"
             alt="Mapa de ubicación de PUNTAMAREA en Barú, cerca a Cartagena"
+            width={1596}
+            height={1030}
+            sizes="(max-width: 768px) 100vw, 768px"
+            quality={80}
             className="h-auto w-full object-contain"
           />
         </div>

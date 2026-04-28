@@ -193,11 +193,15 @@ export function HeroSection() {
         {/* ── Slideshow fondo — mobile ── */}
         <div className="absolute inset-0 md:hidden">
           {MOBILE_SLIDES.map((src, i) => (
-            <img
+            <Image
               key={src}
               src={src}
-              alt="Puntamarea"
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+              alt="Puntamarea — Residencias en Barú"
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              quality={75}
+              className={`object-cover transition-opacity duration-1000 ${
                 i === slideIndex ? "opacity-100" : "opacity-0"
               }`}
             />

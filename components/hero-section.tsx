@@ -212,6 +212,7 @@ export function HeroSection() {
           muted
           loop
           playsInline
+          preload="metadata"
           className="absolute inset-0 hidden h-full w-full object-cover md:block"
           poster="/renders/RENDER FINAL 9.jpg"
         >

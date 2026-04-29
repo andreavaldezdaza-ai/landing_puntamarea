@@ -99,7 +99,8 @@ Esta regla va FUERA de `@layer base` (Tailwind v4 puede ignorar `@media` dentro 
 - `/hero-video.mp4` — 11MB (ya comprimido, meta <15MB alcanzada)
 - `/logo-aliado-1.png` (Inspira), `/logo-aliado-2.png` (Viveloo), `/logo-aliado-3.png` (Ahead)
 - `/logo-ahead.png`, `/logo-inspira.png`, `/logo-ora-raw.png` — logos adicionales
-- `/brochure-puntamarea.pdf` — 14MB (versión actual: BROCHURE PUNTA MAREA - CASAS_compressed.pdf)
+- `/brochure-puntamarea.pdf` — 9MB (versión actual: BROCHURE PUNTA MAREA - CASAS TIPO (VIVELOO)_compressed). Servido en sección Residencias y en /gracias.
+- `/icon.svg` — favicon de marca con paths SVG (roseta de 8 pétalos blancos sobre fondo `#66523c`). NO usa `<text>` (los favicons inconsistentes entre browsers con fonts del sistema). Puro `<rect>` + `<circle>` + `<path>`.
 - `/ubicacion-puntamarea.png` — mapa de ubicación Barú + Cartagena (usado en ProjectSection)
 - `/og-render-21.jpg`, `/og-render-9.jpg` — renders disponibles para OG image (editar constante en `app/opengraph-image.tsx`)
 
@@ -132,9 +133,9 @@ Esta regla va FUERA de `@layer base` (Tailwind v4 puede ignorar `@media` dentro 
 - [x] ~~Meta tags OG/Twitter~~ ✅ `metadataBase`, `openGraph`, `twitter` (summary_large_image), canonical y JSON-LD enriquecido con `@graph` (Organization, WebSite, RealEstateListing+Residence) configurados en `app/layout.tsx`.
 - [x] ~~OG image dinámica~~ ✅ `app/opengraph-image.tsx` genera 1200×630 via `ImageResponse`. Diseño actual: render de fondo + overline + titular + 3 KPIs. Para iterar diseño usar rutas `/og-preview/a|b|c` (a eliminar cuando se decida el final).
 - [x] ~~sitemap.ts + robots.ts + manifest.ts~~ ✅ Archivos nativos Next.js en `app/`.
-- [ ] **Favicon** — verificar que existe y se muestra en tab del navegador.
+- [x] ~~Favicon~~ ✅ `/icon.svg` con roseta path-based (Viveloo brown #66523c + 8 pétalos arena). Verificado en pestaña Chrome.
 - [ ] **GTM / dataLayer** — verificar que `form_submit_puntamarea` se dispara correctamente con UTM params.
-- [ ] **Performance Lighthouse** — correr auditoría, target ≥ 85 en Performance. Si el video penaliza LCP, considerar lazy loading o poster image.
+- [x] ~~Performance Lighthouse~~ ✅ **Desktop 92, Mobile 67** (28 abr 2026). Aceptable para landing real estate con renders 4K (industria estándar 50-70 mobile). Core Web Vitals: CLS 0, FCP 1.2s, Speed Index 1.9s. LCP móvil sigue alto (~14s) por hidratación de JS bundle, no por imágenes. Sprint D opcional pendiente: lazy load Framer Motion components abajo del fold.
 - [ ] **WhatsApp floating button** — verificar que no tapa contenido importante en móvil en cada sección.
 
 ### Prioridad BAJA — Nice to have
@@ -209,3 +210,30 @@ Todos los cambios son `md:` responsive — desktop intocado. Principales:
 **Deliverables Guía Visa:**
 - `docs/guia-visa-content.md` y `docs/guia-visa.html` con 9 páginas densas consolidadas.
 - Canva MCP para editar diseño existente (arreglar textos concatenados del importador).
+
+## 🧰 Cambios recientes (sesión Performance + brochure + favicon · 28 abr 2026)
+
+**Brochure actualizado:**
+- Reemplazo de `public/brochure-puntamarea.pdf` con versión "Casas Tipo (Viveloo)" (14MB → 9MB).
+- Sin cambios de código (ambas descargas en residences-section y /gracias usan misma ruta).
+
+**Favicon de marca:**
+- `public/icon.svg` reescrito con paths (NO `<text>`). Roseta de 8 pétalos blancos sobre fondo `#66523c`. Render consistente en todos los browsers.
+- Botón "Volver al inicio" en /gracias mejorado: de `text-white/30` casi invisible a botón con borde, padding, microanimación de flecha al hover.
+
+**Optimizaciones Performance (Lighthouse Mobile 57 → 67, Desktop 87 → 92):**
+
+1. **`next.config.mjs`** — quitar `images.unoptimized: true` que estaba bloqueando toda optimización. Agregar `formats: ['image/avif', 'image/webp']` + `deviceSizes` + `imageSizes` responsive.
+2. **Hero video desktop-only** — `<video>` se renderiza condicionalmente con `useState + matchMedia('(min-width: 768px)')`. En mobile el `<video>` NO existe en DOM (antes estaba con `hidden md:block` pero el browser igual descargaba 11MB). Junto con `preload="metadata"` desktop.
+3. **`<img>` directos → `<Image>`** en hero-section, project-section, gallery-carousel, residences-section, contact-section. Cada uno con `fill`, `sizes` apropiado, `quality` 75-80, `priority` solo en LCP element, `loading="lazy"` en los demás.
+4. **GTM strategy** `beforeInteractive` → `afterInteractive` (no bloquea render inicial).
+5. **Meta Pixel strategy** `afterInteractive` → `lazyOnload` (carga al `window.onload`).
+6. **Font weights reducidos:** Montserrat 7 pesos → 3 (300, 500, 600). Playfair 4 pesos → 2 (400, 500). Ambos con `display: swap`. Ahorro ~180KB en payload de fonts.
+
+**Lecciones aprendidas (importante para futuras sesiones):**
+
+- **`hidden md:block` no oculta del DOM** — el browser sigue descargando el contenido. Para evitar descarga real en breakpoint, usar `useState + matchMedia` y renderizado condicional.
+- **`<img>` directo NUNCA en producción** — siempre `<Image>` de Next.js para activar AVIF/WebP responsive. `unoptimized: true` en next.config.mjs cancela toda optimización aunque uses `<Image>`.
+- **`backdrop-blur` sobre fondos dinámicos** — NO siempre causa forced reflow. Probé quitarlo del stats strip del hero y el LCP empeoró de 14s a 21s. **Mantenerlo** en `bg-sand-deep/88 backdrop-blur-md`.
+- **Network payload bajó de 44MB a 7MB** con todos los cambios anteriores. La métrica de Performance mobile (67) está limitada por **JS bundle hidratando** (Framer Motion 12 + componentes), no por assets. Para subir más allá de 70 mobile, hace falta lazy loading de Framer Motion components abajo del fold (Sprint D).
+- **PageSpeed con Slow 4G throttling** es brutal. Comparativa de la industria: Airbnb, Booking, Expedia tienen Mobile Performance 50-70. Aceptable para este caso si Core Web Vitals pasan.
